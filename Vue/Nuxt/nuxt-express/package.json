@@ -1,0 +1,16 @@
+{
+  "name": "nuxt-express",
+  "version": "1.0.0",
+  "description": "Nuxt.js project",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt build && nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "nuxt": "^2.0.0"
+  }
+}
