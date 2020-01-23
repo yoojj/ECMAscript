@@ -4,26 +4,23 @@
 
 
 - [ECMAScript](#ecmascript)
-    - [Language](./ECMAScript/)
-    - [Module](./js-module.md)
-    - [Package Manager](./js-package-manager.md)
-    - [Build (bundler)](./js-build.md)
-    - [Lint](./js-lint.md)
-    - [Transpiler](./js-transpiler.md)
-    - [Polyfill](./js-polyfill.md)
+    - [JS Language](./ECMAScript/)
+    - [JS Module](./js-module.md)
 - [CSJS](#csjs)
 - [SSJS](#ssjs)
-    - WSH
-    - jaxer (https://github.com/aptana/Jaxer)
     - [node](./node/)
-        - <s>io</s>
-        - node-red (https://nodered.org)
-        - nodeBots (http://nodebots.io)
-    - deno (https://deno.land/)
-- [AltJS](#altjs)
+- [Compile to JavaScript](#compile-to-javascript)
     - [TypeScript](./TypeScript/)
-- [Framework](#framework)
-- [Library](./JS-lib/)
+- [JS Framework](#framework)
+    - [Vue](./Vue/)
+- [JS Library](./JS-lib/)
+- JS Tool     
+    - [JS Polyfill](./js-polyfill.md)
+    - [JS Lint](./js-lint.md)
+    - [JS Transpiler](./js-transpiler.md)
+    - [JS Build](./js-build.md)
+    - [JS Package Manager](./js-package-manager.md)
+
 
 
 
@@ -52,7 +49,7 @@ ECMAScript = JavaScript (Netscape) + Jscript (MS) + ...
 마이크로소프트 : VB스크립트, J스크립트  
 
 **모카스크립트**  
-: 사용자와 동적 상호 작용, DOM 객체 제어 및 자바 애플릿 대체하기 위해 만든 최초 언어    
+: 사용자와 동적 상호 작용, DOM 객체 제어 및 자바 애플릿 대체하기 위해 만든 최초 자바스크립트    
 
 
 **ES.Next**  
@@ -76,8 +73,8 @@ ES2015 -- 2015년에 표준화 된 ES6
 Client Side JavaScript    
 : 클라이언트 측에서 실행되는 자바스크립트         
 : html, css 등 클라이언트 측 컴포넌트 조작   
-: Chrome, Firefox, Safari, Edge 같은 웹 브라우저는 자동 업데이트되는 에버그린 브라우저여서 ES 스펙 호환성이 높음  
-: IE 경우 에버그린 브라우저가 아니기 때문에 트랜스파일러를 통해 ES5 코드로 변환 필요  
+: Chrome, Firefox, Safari, Edge 같은 브라우저는 자동으로 업데이트되는 에버그린 브라우저여서 ES 스펙 호환성이 높음  
+: IE 경우 에버그린 브라우저가 아니기 때문에 최신 ES 문법 사용시 트랜스파일러를 통해 지원되는 ES 버전으로 코드 변환 필요  
 
 **호환성 확인**  
 https://caniuse.com/  
@@ -88,75 +85,94 @@ https://kangax.github.io/compat-table/es6/
 ### SSJS
 Server Side JavaScript  
 : 서버 측에서 실행되는 자바스크립트      
-: 클라이언트와 서버의 간격을 없애기 위해 만들어졌으며 파일시스템, 데이터베이스 등에 접근 가능    
-: [Rhino](./ECMAScript-Engine/Rhino.md), [V8](./ECMAScript-Engine/V8.md), [SpiderMonkey](../ECMAScript-Engine/SpiderMonkey.md) 같은 독립적인 자바스크립트 엔진으로 해석    
-
+: 클라이언트와 서버의 간격을 없애기 위해 만들어짐   
+: [Rhino](./ECMAScript-Engine/Rhino.md), [V8](./ECMAScript-Engine/V8.md), [SpiderMonkey](../ECMAScript-Engine/SpiderMonkey.md) 같은 독립적인 자바스크립트 엔진으로 실행  
 
 **Rhino**  
-: 최초 서버사이드 자바스크립트 엔진  
+: 최초 서버 사이드 환경에서 실행하기 위해 만들어진 자바스크립트 엔진   
+: JS로 작성된 코드를 java 객체에 전달    
 
 
-**구현**
-- node
+**SSJS solution**  
+- [node](./node/)
+    - <s>io</s>
+- deno (https://deno.land/)
 - MongoDB
 - CouchDB
+- WakandaDB
 - ...
 
-**SSJS list**  
+**SSJS solution list**  
 https://en.wikipedia.org/wiki/List_of_server-side_JavaScript_implementations
 
 
 
 ### AltJS  
-Alternative JS  (http://smurfpandey.github.io/altjs/)   
-: 자바스크립트 단점을 보완하거나 해결한 도구 및 언어             
-: 자바스크립트 코드로 컴파일해 브라우저에서 동작  
+Alternative JS   
+: JS 단점을 보완하거나 해결한 언어나 도구          
 
-- [Dart](#dart)
+**altjs list**  
+http://smurfpandey.github.io/altjs/
+
+
+### Compile to JavaScript
+
+**언어**   
+- [TypeScript](./TypeScript/)
 - [PureScript](#purescript)
-- [CoffeeScript](#coffeescript)
-- [ClojureScript](#clojurescript)
+- [Dart](#dart)
+- Reason
+- Scala
+- Kotlin
+- Clojure
 - ...
 
 
-
-#### Dart (구글)
-: 자바스크립트 문법을 개선한 언어   
-: 다트 가상머신 (SDK)  
-: 동적 + 정적 타입 언어  
-: 클래스 기반 객체지향 언어   
-
-
-<s>AtScript (구글)</s>  
-: Dart 일부 기능 포함하고 TypeScript를 확장한 언어  
-
-
-
 #### PureScript
-: ML, 하스켈에 영향받은 함수형 언어  
+: ML, Haskell에 영향받은 함수형 언어  
+
+**build tool**  
+- pulp
+
+
+```bash
+# 컴파일러와 빌드 툴 설치   
+$ npm install purescript pulp -g
+
+# PS는 bower 레지스트리를 통해 패키지 사용  
+$ npm install bower -g
+
+# 프로젝트 생성
+$ mkdir example
+$ cd example
+$ pulp init
+
+# 명령어
+$ pulp build
+$ pulp test
+$ pulp repl
+```
+
+https://github.com/purescript/documentation
 
 
 
-#### ClojureScript
-: 리스프, 클로저에 영향받은 함수형 언어    
-: 클로저는 JVM에서 실행되는 언어며 클로저스크립트는 JS VM에서 실행되는 언어    
+#### Dart (구글)     
+: dart2js 컴파일러를 통해 dart 코드를 JS 코드로 컴파일해 브라우저에서 동작    
 
-
-
-#### JerryScript (삼성)
-: IoT 디바이스를 위한 경량 엔진  
-https://github.com/jerryscript-project/jerryscript
+- Dart Native : Dart VM + JIT 컴파일러 + AOT 컴파일러  
+- Dart Web : dart2js 컴파일러
 
 
 
 ### Framework
 
 **Web**
-- [Backbone](./Backbone/) --템플릿엔진 x
-- Angular --템플릿엔진 o, AOT compiler
+- [Backbone](./Backbone/) -- 템플릿엔진 x
+- Angular -- 템플릿엔진, AOT 컴파일러
 - [Vue](./Vue/)
-- [Aurelia](./Aurelia/)
 - [Svelte](./Svelte/)
+- [Aurelia](./Aurelia/)
 - Cycle
 - Ember
 - Ext
@@ -180,6 +196,12 @@ https://github.com/jerryscript-project/jerryscript
 - Flutter
 - OpenUI5
 
+
+**Test**  
+- Mocha  
+- Jasmine
+- Karma
+- Jest
 
 
 ### www
