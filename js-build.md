@@ -124,11 +124,6 @@ $ browserify [파일.js] -o [bundle.js]
 : 웹팩으로 빌드한 결과물을 브라우저에서 새로고침없이 실시간 반영   
 
 
-- [loader](#loader)
-- [plugin](#plugin)
-
-
-
 ```bash
 # 설치
 $ npm install webpack webpack-cli -g
@@ -150,6 +145,10 @@ $ webpack [엔트리파일.js] [bundle.js]
 
 **webpack.config.js**  
 : 웹팩 설정 파일   
+
+- [loader](#loader)
+- [plugin](#plugin)
+
 
 ```js
 module.export = {
