@@ -1,4 +1,4 @@
-# JS Build
+# JS Build    
 
 - [task runner](#task-runner)
     - grunt
@@ -90,8 +90,8 @@ gulp.task('default', ['task-name', 'task-name', 'task-name']);
 
 ### browserify
 : 모듈 번들러 + 태스크 러너      
-: CommonJS 기반으로 작성된 모듈을 브라우저에서 사용할 경우 사용    
-: node에서 사용하는 기능을 브라우저에서 사용 가능 하도록 [라이브러리](https://github.com/browserify/browserify-handbook#builtins) 제공
+: CommonJS 포맷으로 작성된 모듈을 브라우저에서 사용할 경우 사용    
+: node에서 사용하는 기능을 브라우저에서 사용할 수 있도록 [라이브러리](https://github.com/browserify/browserify-handbook#builtins) 제공
 
 **플러그인**     
 - watchify
@@ -124,25 +124,27 @@ $ browserify [파일.js] -o [bundle.js]
 : 웹팩으로 빌드한 결과물을 브라우저에서 새로고침없이 실시간 반영   
 
 
-**기능**  
-- Tree Shaking (https://webpack.js.org/guides/tree-shaking/)
-- Code Spliting (https://webpack.js.org/guides/code-splitting/)
-- Lazy loading (https://webpack.js.org/guides/lazy-loading/)
-- Dev Server (https://webpack.js.org/configuration/dev-server/)
+- [loader](#loader)
+- [plugin](#plugin)
+
 
 
 ```bash
 # 설치
 $ npm install webpack webpack-cli -g
 
-# 번들
+# 번들링
 $ webpack [엔트리파일.js] [bundle.js]  
 
-# 웹팩 설정 파일 실행
-$ webpack
 
-## Loader 사용시 필요한 모듈 설치  
-$ npm install style-loader css-loader file-loader
+# package.json 스크립트 추가
+{
+    "scripts": {
+        # 개발용 설정 파일이 별도로 있는 경우
+        "bundle": "webpack --watch --config webpack.dev.config.js",
+        "production": "webpack"
+    }
+}
 ```
 
 
@@ -151,24 +153,90 @@ $ npm install style-loader css-loader file-loader
 
 ```js
 module.export = {
-    // 개발용과 배포용 모드  
-    mode: 'development | production',
+    mode: 'development | production | none',
+    // development
+    // : 개발용 모드로 소스맵 제공  
 
-    // 엔트리 파일을 기준으로 의존되는 모듈을 단일 파일로 번들    
-    entry : '엔트리파일.js',
-    context: __dirname + '/app',
+    // produntion
+    // : 배포용 모드로 코드 압축화와 난독화 및 트리 쉐이킹 처리를 함
+
+
+    entry : 'index.js',
+    // 엔트리 파일을 기준으로 의존되는 모듈들을 단일 파일로 번들    
+
+
+
     output : {
         path : __dirname + '/dist',
         filename : 'bundle.js',
     },
+    // 번들 파일 이름과 위치 지정
 
-    // 로더를 통해 이미지, 웹폰트, css 등 관리   
+
     module : {
         rules : [],
     },
+    // 로더를 통해 이미지, 웹폰트, css 등 관리   
+
 
     plugins : [],
+    // 난독화, 최적화 등 추가 기능을 위한 설정  
+
+
+    optimization : {},
 }
+```
+
+
+#### loader
+: 타입스크립트, CSS, 이미지, 폰트 등을 JS 모듈로 변환하는 도구   
+: 웹팩 자체는 JS만 인식하나 웹팩 로더를 통해 리소스를 JS로 변환하여 JS 모듈 내에서 사용이 가능해지고 번들 대상이 됨      
+
+**loader list**  
+https://webpack.js.org/loaders/
+
+
+```bash
+# 1. 로더 설치
+$ npm install style-loader css-loader babel-loader
+
+
+# 2. 웹팩 환경 설정에 로더 추가
+module : {
+    rules : [
+        {
+            test : /\.css$/,
+            use : ['style-loader', 'css-loader']
+        },
+        {
+            exclude : /node_modules/,
+            test : /\.(js|jsx)$/,
+            use : 'babel-loader',
+        },
+    ]
+}
+```
+
+
+#### plugin
+: 번들된 결과물에 난독화, 최적화 등 추가 기능을 위한 도구   
+: 내장된 플러그인을 사용하거나 사용자 정의 플러그인 사용   
+
+**plugin list**  
+https://webpack.js.org/plugins/
+
+
+```bash
+# 1. 플러그인 설치
+$ npm install clean-webpack-plugin
+
+
+# 2. 웹팩 환경 설정에 플러그인 추가
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+plugins: [
+    new CleanWebpackPlugin(['dist'])
+]
 ```
 
 
@@ -179,6 +247,7 @@ module.export = {
 : 사용하지 않는 코드를 제거하는 기능 지원 (트리 쉐이킹)    
 
 **플러그인**  
+- rollup-plugin-html-entry
 - rollup-plugin-uglify
 - rollup-plugin-commonjs
 - ...
