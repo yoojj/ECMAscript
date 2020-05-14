@@ -1,5 +1,5 @@
-- [Type Coercion](js-type-coercion)
-- [Type Conversion](js-type-conversion)
+[Type Coercion](js-type-coercion)    
+[Type Conversion](js-type-conversion)
 
 
 
@@ -101,7 +101,7 @@ var temp = ![];
 
 
 ---
-# JS Conversion
+# JS Type Conversion
 = Explicit Type Coercion, Type Casting   
 : 형변환 연산자 및 함수를 사용해 명시적으로 데이터 타입 변환    
 
