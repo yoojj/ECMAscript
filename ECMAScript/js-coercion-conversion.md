@@ -1,3 +1,9 @@
+- [Type Coercion](js-type-coercion)
+- [Type Conversion](js-type-conversion)
+
+
+
+---
 # JS Type Coercion
 : 암시적 데이터 타입 변환    
 : 연산식에서 피연산자의 타입이 맞지 않을 경우 JS 엔진이 적절한 타입으로 강제-자동 변환함   
@@ -94,6 +100,7 @@ var temp = ![];
 
 
 
+---
 # JS Conversion
 = Explicit Type Coercion, Type Casting   
 : 형변환 연산자 및 함수를 사용해 명시적으로 데이터 타입 변환    
@@ -179,8 +186,8 @@ Number(undefined) === undefined
 > parseInt(string, radix)
 
 ```js
-let str = '1 2 3';
-let num = parseInt(str);
+var str = '1 2 3';
+var num = parseInt(str);
 (num === 1) == true
 
 parseInt('1000', 2) === 8
@@ -194,12 +201,12 @@ parseInt('1000', 8) === 512
 : 해당 연산자가 연산을 하지 않는다면 형을 강제 변환함
 
 ```js
-let str = '10';
-let num = +str;
+var str = '10';
+var num = +str;
 (num === 10) == true
 
-let num = 10;
-let str = num + '';
+var num = 10;
+var str = num + '';
 (str === '10') == true
 ```
 
