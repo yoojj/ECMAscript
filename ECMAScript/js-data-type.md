@@ -117,9 +117,10 @@ two = 2;    // 전역 변수
 
 ## null
 : null 이라는 하나의 값으로 객체에만 사용     
-: 객체 참조 해지를 위해 의도적으로 부여    
+: 객체 참조 해지를 위해 의도적으로 부여하는 값       
 
-[The history of typeof null](http://2ality.com/2013/10/typeof-null.html)
+\+ The history of typeof null   
+http://2ality.com/2013/10/typeof-null.html
 
 ```js
 var obj = null;
@@ -166,7 +167,7 @@ null === undefined // false  타입이 일치하지 않음
 
 ``` js
 function 확인(value) {
-    if( value ){
+    if(value){
         console.log('truthy');
     } else {
         console.log('falsy');
@@ -365,7 +366,7 @@ const result = myTag `이렇게 ${ () => myFunction() }`;
 
 ## symbol          
 : 심볼 반환    
-: Symbol() 전역 함수로 생성하고 new 키워드 사용 불가               
+: Symbol 전역 함수로 생성하고 new 키워드 사용 불가               
 
 ```js
 const symbol = Symbol('symbol description');
