@@ -1,5 +1,5 @@
-[Type Coercion](js-type-coercion)    
-[Type Conversion](js-type-conversion)
+[Type Coercion](#js-type-coercion)    
+[Type Conversion](#js-type-conversion)
 
 
 
