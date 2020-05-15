@@ -16,16 +16,15 @@
 
 ```js  
 // 배열 병합이 아닌 배열을 문자열로 변환하여 연산
-const arr1 = [1, 2, 3];
-const arr2 = [4, 5, 6];
-const result = arr1 + arr2;
+var arr1 = [1, 2, 3];
+var arr2 = [4, 5, 6];
+var result = arr1 + arr2;
 (result === '1,2,34,5,6') == true
 ```
 
 
 분류 | 설명
 ---|---
-대입 연산자 | variable identifier = expression
 단항 연산자 | 피연산자 1개  ex. 부호 연산자
 이항 연산자 | 피연산자 2개  ex. 산술 연산자, 비교 연산자, 논리 연산자
 삼항 연산자 | 피연산자 3개  ex. 삼항 조건 연산자
@@ -46,8 +45,8 @@ const result = arr1 + arr2;
 	- [삼항 조건 연산자](#삼항-조건-연산자)
 	- [쉼표 연산자](#쉼표-연산자)
 	- [void 연산자](#void-연산자)
-- [typeof](#typeof-연산자)
-- [객체 연산자](#객체 연산자)
+- [typeof 연산자](#typeof-연산자)
+- [객체 연산자](#객체-연산자)
 - [spread 연산자 (ES6)](#spread-연산자)
 - [optional chaining 연산자 (ES2020)](#optional-chaining-연산자)
 - [null 병합 연산자(ES2020)](#null-병합-연산자)
@@ -222,9 +221,11 @@ parseInt(num, 2)
 
 
 
-## 비교 연산자
-≒ 관계 연산자 : 우측 피연산자와 좌측 피연산자간의 관계를 비교해 참 거짓 판별     
-: 우측 피연산자와 좌측 피연산자의 값을 비교하여 그 결과를 논리형으로 리턴    
+## 비교 연산자   
+: 우측 피연산자와 좌측 피연산자의 값을 비교하여 그 결과를 논리형으로 리턴     
+
+**≒ 관계 연산자**      
+: 우측 피연산자와 좌측 피연산자간의 관계를 비교해 참 거짓 판별  
 
 연산자 | 설명
 ---|---
@@ -270,12 +271,12 @@ null === undefined // false  타입이 일치하지 않음
 
 
 **동등 연산자 규칙**   
-0. undefined == null
-1. 두 피연산자가 같은 타입이면 값이 일치하는지 비교
-2. 두 피연산자가 문자열과 숫자면 문자열을 숫자로 바꾸고 일치하는지 비교
-3. 두 피연산자가 불리언과 그외 값이면 불리언을 숫자로 바꾸고 일치하는지 비교
-4. 두 피연산자가 객체와 그외 값이면 객체를 값으로 바꾸고 일치하는지 비교
-5. 이외 비교 결과는 false
+1. undefined == null
+2. 두 피연산자가 같은 타입이면 값이 일치하는지 비교
+3. 두 피연산자가 문자열과 숫자면 문자열을 숫자로 바꾸고 일치하는지 비교
+4. 두 피연산자가 불리언과 그외 값이면 불리언을 숫자로 바꾸고 일치하는지 비교
+5. 두 피연산자가 객체와 그외 값이면 객체를 값으로 바꾸고 일치하는지 비교
+6. 이외 비교 결과는 false
 
 ```js
 ('' == 0) == true
@@ -359,10 +360,10 @@ var result = (num % 2 == 0) ? '짝수' : '홀수';
 ## 쉼표 연산자
 : 좌측부터 우측으로 연산하고 마지막 결과 반환    
 : 연산자 우선 순위에서 가장 낮음    
-: 배열이나 객체에 사용하는 쉼표와 다름   
+! 배열이나 객체에 사용하는 쉼표와 다름   
 
 ```js
-const result = (1+1, 2+2, 3+3);
+var result = (1+1, 2+2, 3+3);
 (result === 6) == true
 
 
@@ -400,7 +401,7 @@ void function(){ .. }();
 // 표현식 결과가 없을때 사용
 function add(a,b){
 	if( !Number.isInteger(a) || !Number.isInteger(b) ){
-        return void console.log("오류!");
+        return void console.log('오류!');
     } else {
         return a + b;
     }
@@ -454,7 +455,7 @@ delete     | delete 연산자     | 객체의 프로퍼티 제거 연산자
 var str = new String('');
 ('length' in str) == true
 
-const obj = {
+var obj = {
 	a : 1,
 	b : 2,
 }
@@ -540,18 +541,18 @@ var result = num ?? 0;
 ## optional chaining 연산자
 
 ```js
-const A = {
+var A = {
 	B : {
 		key : 'value',
 	},
 };
 
 // AND 연산자
-const result = A && A.B && A.B.key;
+var result = A && A.B && A.B.key;
 result === 'value'
 
 // 선택 체인 연산자
-const result = A?.B?.key;
+var result = A?.B?.key;
 ```
 
 
