@@ -1,14 +1,14 @@
 # JS Statement
 : 어떤 동작-행동을 수행하는 명령 문장          
 : 모든 문은 완료된 값(completion value)을 갖음  
-: [표현식](./js-expression.md)처럼 작동할 수 없음   
+: statement는 표현식처럼 작동할 수 없음 (표현식은 statement처럼 작동할 수 있음)
 
 **종류**  
 - [빈문](#빈문)
 - [블록문](#블록문)
 - [선언문](#선언문)
 - [대입문](#대입문)
-- [import&export 문(ES6)](#import-export-문)
+- [import&export 문(ES6)](#import--export-문)
 - [표현식 문](#표현식-문)
 - [제어문](#제어문)
     - [for of 문 (ES6)](#for-of-문)
@@ -25,10 +25,11 @@
 ≠ return value  
 
 ```js
+// 선언문
 var x;
 (x === undefined) == true
 
-// 블록문은 마지막 문이나 표현식을 자신의 완료 값으로 반환
+// 블록문은 마지막 실행문이나 표현식을 자신의 완료 값으로 반환
 // 3 반환
 {1, 2, 3}
 
@@ -62,7 +63,7 @@ for(var i=0; i<5 ; arr[i++]=i);
 ## 블록문
 = 복합문   
 : 문을 중괄호로 묶어 하나의 단위로 그룹화함         
-: let과 const 키워드로 선언된 변수는 해당 블록에서만 사용 가능        
+: let과 const로 선언된 변수는 해당 블록에서만 사용 가능        
 
 ```js
 {
@@ -82,7 +83,7 @@ console.log(str); // str is not defined
 
 ## 선언문
 : 모든 선언문은 JS 엔진에 의해 호이스팅 됨   
-: let, const, class는 호이스팅되나 초기화되지 않은 상태를 유지      
+: let, const, class 선언문은 호이스팅되나 [초기화되지 않은 상태](./README.md#tdz)를 유지      
 
 
 **변수 선언문**  
@@ -91,6 +92,14 @@ console.log(str); // str is not defined
 var x;
 let y;
 const z = {};
+
+
+// 호이스팅
+console.log(a);
+console.log(b); // Cannot access 'b' before initialization
+
+var a = 1;
+let b = 2;
 ```
 
 
@@ -188,19 +197,12 @@ result = (num === 1) ? true : false ;
     - do while
 
 
-### if 문
-
-> if(조건){ 실행문 }  
-> if(조건){ 조건이 참이면 실행 } else { 조건이 거짓이면 실행 }  
-> if(){ } else if(){ } else { }
-
-
 
 ### switch 문
 
 ```js
 var num = 10;
-switch(num%2){
+switch(num % 2){
     case 0 :
         console.log('짝수');
     break;
@@ -239,7 +241,7 @@ for(var num = 0; ; ++num){
 : 객체 인덱스 순회    
 : 객체의 mark된 프로퍼티를 제외한 모든 프로퍼티 키 순회  
 
-> for(variable in 객체){ }
+> for(variable in object){ }
 
 ```js
 for(var i in ['a','b','c']){
@@ -262,7 +264,7 @@ for(var key in obj){
 ### for of 문
 : 이터러블 객체 값 순회   
 
-> for(variable of 객체){ }
+> for(variable of iterable){ }
 
 ```js
 (Symbol.iterator in []) == true
@@ -311,7 +313,7 @@ var obj = {
 var test = obj[Symbol.iterator]();
 test.next();
 
-for (var value of obj) {
+for(var value of obj) {
     console.log(value);
 }
 ```
