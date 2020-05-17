@@ -12,7 +12,7 @@
 - [표현식 문](#표현식-문)
 - [제어문](#제어문)
     - [for of 문 (ES6)](#for-of-문)
-    - [for await 문 (ES9)](#for-await-문))
+    - [for await 문 (ES9)](#for-await-문)
 - [흐름 제어문](#흐름-제어문)
 - [throw](./js-exception-handling.md#throw)
 - [try catch](./js-exception-handling.md#try-catch)
@@ -239,7 +239,7 @@ for(var num = 0; ; ++num){
 
 ### for in 문
 : 객체 인덱스 순회    
-: 객체의 mark된 프로퍼티를 제외한 모든 프로퍼티 키 순회  
+: 객체의 mark된 프로퍼티를 제외한 키 순회  
 
 > for(variable in object){ }
 
@@ -323,6 +323,9 @@ for(var value of obj) {
 ### for await 문
 
 > for await (variable of iterable) { }
+
+```js
+```
 
 
 
