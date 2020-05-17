@@ -1,5 +1,5 @@
 # JS Exception Handling
-: Runtime Error 발생시 [Error](./object/js-error.md) 객체를 통해 처리   
+: Runtime Error 발생시 [Error](./object/js-obj-error.md) 객체를 통해 처리   
 
 - [throw](#throw)
 - [try catch](#try-catch)
