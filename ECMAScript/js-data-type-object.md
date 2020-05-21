@@ -9,10 +9,10 @@
 : JS는 숫자, 문자, 함수 모두 일급 객체  
 
 
-**종류**  
+**분류**  
 - [네이티브 객체](#native-object)
-    - [Native Object list](./object/)
 - [호스트 객체](#host-object)
+- [전역 객체](#global-object)
 - [사용자 정의 객체](#user-defined-object)
 
 
@@ -58,7 +58,7 @@ var str = new String('string');
 
 
 
-### Global Object  
+## Global Object  
 = 전역 객체, 루트 객체, 최상위 객체      
 : 전역 프로퍼티, 전역 함수, 특별한 객체를 제외한 모든 객체들은 전역 객체의 자손    
 : 전역 객체가 가장 먼저 생성되어 전역 객체의 프로퍼티 사용 가능  
@@ -68,20 +68,19 @@ var str = new String('string');
 환경 | 식별자 | 제공 객체
 ---|---|---
 [node](https://nodejs.org/api/) | [global](https://nodejs.org/api/globals.html) | Built-in Object, http, fs, url 등
-[browser](https://developer.mozilla.org/ko/docs/Web/API) | [window](https://developer.mozilla.org/en-US/docs/Web/API/Window) | Built-in Object, BOM, DOM, XMLHttpRequest, Web API 등
+[browser](https://developer.mozilla.org/en-US/docs/Web/API) | [window](https://developer.mozilla.org/en-US/docs/Web/API/Window) | Built-in Object, BOM, DOM, XMLHttpRequest, Web API 등
 
 
 #### Global Object API
 : 호스트에 따라 프로퍼티가 추가될 수 있음    
 
-전역 프로퍼티 | 설명
+전역 프로퍼티 & 전역 함수 | 설명
 ---|---
 NaN          | 정의할 수 없는 수치에 대한 값  
 Infinity     | 표현하지 못하는 범위의 수에 대한 값   
 undefined    | undefined 값  
 null         | null 값
 globalThis   | 전역 객체 반환  
-<b>전역 함수</b> | <b>설명</b>
 eval()       | 주어진 문자열을 코드로 실행
 parseInt()   | 문자열을 정수로 변환
 parseFloat() | 문자열을 실수로 변환
@@ -102,7 +101,7 @@ decodeURIComponent() | encodeURIComponent() 퍼센트 인코딩한 URI 디코딩
 ## User Defined Object
 
 - [생성자 함수](#생성자-함수)
-- [프로토타입](#프로토타입)
+- [prototype](#prototype)
 - [class (ES6)](#class)
 
 
@@ -243,7 +242,7 @@ a.PIN = 0;
 
 
 
-### 프로토타입  
+### prototype 
 : 동일한 기능을 하는 메소드를 공유하기 위한 특별한 객체    
 
 ```js
