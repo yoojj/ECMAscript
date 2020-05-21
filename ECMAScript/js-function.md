@@ -6,7 +6,7 @@
 
 - [function parameter](#function-parameter)
     - [default parameter (ES6)](#default-parameter)
-    - [rest parameter (ES6)](#rest-papameter)
+    - [rest parameter (ES6)](#rest-parameter)
 - [function arguments](#function-arguments)
 - [function return](#function-return)
 - [function this](#function-this)
@@ -45,7 +45,7 @@ var f = function func(){ };
 
 // 함수 생성자
 // : 함수 동적 정의시 사용
-var add = new Function('x','y','return x+y');
+var func = new Function('a','b','return a+b');
 
 
 // new + function -- 사용 주의
@@ -75,11 +75,11 @@ func(1, '2', [3]);
 
 
 // 주의
-function add(a, b){
+function func(a, b){
     return a + b;
 }
 
-Object.is(NaN, add()) == true
+Object.is(NaN, func(1)) == true
 ```
 
 
@@ -295,6 +295,7 @@ function f(){
 : 화살표 함수에서 this 주의   
 
 \+ Function.prototype.bind()
+\+ [바운드 함수](#)
 
 
 **함수**
@@ -393,25 +394,25 @@ arr[0] = func(0);
 
 
 // 함수를 파라미터로 전달
-function add(a, b){
-    return a() + b();
+function func(f1, f2){
+    return f1() + f2();
 }
 
 function num1(){ return 1 }
 function num2(){ return 2 }
 
-var result = add(num1, num2);
+var result = func(num1, num2);
 (result === 3) == true
 
 
-// 함수 반환
-function add(a){
+// 함수 반환 = 고차 함수   
+function func(a){
     return function(b){
         return a + b;
     }
 }
 
-var result = add(1)(2);
+var result = func(1)(2);
 (result === 3) == true
 ```
 
