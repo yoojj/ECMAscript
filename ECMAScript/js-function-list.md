@@ -3,7 +3,6 @@
 - [내장 함수](#내장-함수)
 - [익명 함수](#익명-함수)
 - [동적 함수](#동적-함수)
-- [화살표 함수 (ES6)](#화살표-함수-es6)
 - [중첩 함수](#중첩-함수)
 - [헬퍼 함수](#헬퍼-함수)
 - [재귀 함수](#재귀-함수)
@@ -14,6 +13,7 @@
 - [비동기 함수](#비동기-함수)
 - [콜백 함수](#콜백-함수)
 - [바운드 함수](#바운드-함수)
+- [화살표 함수 (ES6)](#화살표-함수-es6)
 - [제너레이터 함수 (ES6)](#제너레이터-함수)
 - promise (ES6)
 - async & await(ES8)
@@ -73,37 +73,6 @@ var result = func(1,2);
 var num = 0;
 (new Function('console.log(`${num} : ${str}`)'))();
 var str = 'A';
-```
-
-
-
-## 화살표 함수 (ES6)  
-: 함수 표현을 단순화 함     
-: function 키워드 대신 화살표 기호를 사용해 함수 생성   
-: new 연산자 사용이 불가능하여 인스턴스 생성 불가    
-: agumensts 객체 사용이 불가능하며 대신 rest parameter 사용  
-: this 주의, 화살표 함수는 this를 변경하지 않음     
-
-```js
-// 파라미터가 없을 경우
-() => { };
-
-// 파라미터가 하나면 괄호 생략 가능
-param => { };
-
-// funtion(param1, param2){  }
-(param1, param2) => { };
-
-// 디폴트 매개 변수 (ES6)
-(param1=0, param2=0) => { };
-
-// 나머지 매개 변수 (ES6)
-(param1, param2, ...args) => { };
-
-
-// 객체 반환
-var obj = (a, b, c) => { return { a, b, c } };
-var obj = (a, b, c) => ({ a, b, c });
 ```
 
 
@@ -359,6 +328,37 @@ var bound = function() {
 
 var test = bound.bind(obj);
 (test() === 'value') == true
+```
+
+
+
+## 화살표 함수 (ES6)  
+: 함수 표현을 단순화 함     
+: function 키워드 대신 화살표 기호를 사용해 함수 생성   
+: new 연산자 사용이 불가능하여 인스턴스 생성 불가    
+: agumensts 객체 사용이 불가능하며 대신 rest parameter 사용  
+: this 주의, 화살표 함수는 this를 변경하지 않음     
+
+```js
+// 파라미터가 없을 경우
+() => { };
+
+// 파라미터가 하나면 괄호 생략 가능
+param => { };
+
+// funtion(param1, param2){  }
+(param1, param2) => { };
+
+// 디폴트 매개 변수 (ES6)
+(param1=0, param2=0) => { };
+
+// 나머지 매개 변수 (ES6)
+(param1, param2, ...args) => { };
+
+
+// 객체 반환
+var obj = (a, b, c) => { return { a, b, c } };
+var obj = (a, b, c) => ({ a, b, c });
 ```
 
 
