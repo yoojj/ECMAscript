@@ -1,43 +1,43 @@
 # JS Data Type
-: 데이터의 형태에 따라 데이터 타입 분류      
+: 데이터의 형태에 따라 타입 분류      
 : 6개 기본 데이터 타입을 제외한 모든 것은 객체로 취급   
 
 
 데이터 타입 | 설명
 ---|---
-[Primitive](#primitive) | 불변인 하나의 값, 프로퍼티가 없으며 대응하는 래퍼 객체 존재
-[Object](./object/)     | 여러 프로퍼티를 갖는 일종의 컨테이너
-
+[Primitive](#primitive) | 불변인 하나의 값으로 프로퍼티가 없으며 대응하는 래퍼 객체 존재
+[Object](./js-data-type-object.md) | 여러 프로퍼티를 갖는 일종의 컨테이너
 
 
 **primitive vs object**
 
-```JS
+```js
 // primitive - 값을 비교
-const num1 = 1;
-const num2 = 1;
+var num1 = 1;
+var num2 = 1;
 (num1 === num2) == true
 
-const str1 = 'str';
-const str2 = 'str';
+var str1 = 'str';
+var str2 = 'str';
 (str1 === str2) == true
 
 
 // object - 참조를 비교
-const obj1 = {num:1};
-const obj2 = {num:1};
+var obj1 = {num:1};
+var obj2 = {num:1};
 (obj1 === obj2) == false
 
-const str1 = new String('str');
-const str2 = new String('str');
+var str1 = new String('str');
+var str2 = new String('str');
 (str1 === str2) == false
 ```
 
 
 
+---
 # Primitive
 : 불변인 하나의 값  
-: 프로퍼티가 없으며 대응하는 [래퍼 객체](./object#래퍼-객체)를 이용해 프로퍼티 사용    
+: 프로퍼티가 없으며 대응하는 [래퍼 객체](./js-data-type-object.md#wrapper-object)를 이용해 프로퍼티 사용    
 : undefined와 null은 래퍼 객체가 없음   
 
 
@@ -52,49 +52,38 @@ const str2 = new String('str');
 
 
 ## undefined
-: [전역 객체](./object#global-object-api)의 프로퍼티      
+: 전역 객체의 프로퍼티      
 : 변수를 선언하고 명시적으로 값을 할당하지 않으면 해당 변수에 undefined 할당        
 : 제공되지 않은 매개 변수와 정의하지 않은 프로퍼티의 값   
-: 함수의 경우 return을 명시하지 않을 경우 undefined를 리턴    
+: 함수의 경우 return을 명시하지 않을 경우 undefined 리턴    
 
 ```js
-// 안티패턴
-let antiPattern = undefined;
+(typeof undefined === 'undefined') == true
 
 
-(typeof undefined) === 'undefined'
+var num;   
+(typeof num === 'undefined') == true
 
 
-let one;   
-(typeof one) === 'undefined'
-
-one = 1;
-(typeof one) == 'number'
-
-one = true;
-(typeof one) == 'boolean'
+var func = function(){};
+(typeof func() === 'undefined') == true
 
 
-const func = (function(){})();
-(typeof func) === 'undefined'
-
+// 전역 범위에서는 식별자로 사용 불가
+var undefined = 0;
+(undefined === 0) == false
 
 function func(){
     // 전역 범위가 아닐 경우 식별자로 사용 가능
-    let undefined = 0;
-    return undefined;
-}
-
-
-// 체크
-let num;
-if(num === undefined){
-    num = 0;
+    var undefined = 0;
+    (undefined === 0) == true
+    console.log(undefined);
 }
 
 
 // void 연산자는 표현식 수행 후 undefined를 반환
-let num;
+var num;
+(num === undefined) == true
 (num === void 0) == true
 ```
 
@@ -212,9 +201,10 @@ function 확인(value) {
 
 ## number
 : 현재 지원하는 숫자 데이터 타입은 double 형태 하나          
-: 모든 숫자는 64비트 부동 소수점 형태로 저장  
+: 모든 숫자는 64비트 부동 소수점 형식(IEEE 754)       
 
 **숫자 타입에 속하는 특별한 값**
+- +0
 - -0
 - NaN
 - Infinity
@@ -249,13 +239,14 @@ Object.is(+0, -0) == false
 
 
 // 지수표기법
+(100000 === 1e5) == true
 (123400000 === 1.234e8) == true
 
 
 // typeof 연산자
-let num1 = 1;
-let num2 = Number(2);
-let num3 = new Number(3);
+var num1 = 1;
+var num2 = Number(2);
+var num3 = new Number(3);
 
 (typeof num1 === 'number') == true
 (typeof num2 === 'number') == true
@@ -283,11 +274,23 @@ Object.is(NaN, Number.NaN) == true
 
 
 // Infinity
+Number.POSITIVE_INFINITY == 'Infinity'
+Number.NEGATIVE_INFINITY == '-Infinity'
+
+(2**1024 === Infinity) == true
+(-(2**1024) === -Infinity) == true
+
+(Number.MAX_VALUE < Infinity) == true
+(Number.MIN_VALUE > -Infinity) == true
+
 (Infinity === +Infinity) == true
 (Infinity === -Infinity) == false
 
-Number.POSITIVE_INFINITY == 'Infinity'
-Number.NEGATIVE_INFINITY == '-Infinity'
+(Infinity + Infinity) == Infinity
+(Infinity * Infinity) == Infinity
+
+Object.is(NaN, (Infinity - Infinity)) == true
+Object.is(NaN, (Infinity / Infinity)) == true
 ```
 
 
@@ -301,7 +304,7 @@ Number.NEGATIVE_INFINITY == '-Infinity'
 
 
 ```js
-const str = 'stirng';
+var str = 'stirng';
 (str[2] === 'i') == true
 
 
@@ -313,7 +316,7 @@ const str = 'stirng';
 
 
 /* 여러 줄 입력시 오류
-let multiline =
+var multiline =
 '
 first line
 second line
@@ -322,7 +325,7 @@ second line
 
 // 백틱으로 여러 줄 입력 가능
 // 콘솔에서는 사용 불가  
-let multiline =
+var multiline =
 `
 first line
 second line
@@ -333,8 +336,8 @@ second line
 **Template literals**  
 
 ```js
-const backtick = '백틱';
-const result = `${backtick} 사용`;
+var backtick = '백틱';
+var result = `${backtick} 사용`;
 ```
 
 
@@ -342,61 +345,70 @@ const result = `${backtick} 사용`;
 
 ```js
 // 방법1
-const myTag = (str, ...args) => {
+var myTag = (str, ...args) => {
     return str + args;
 };
 
-const name = 'ooo';
-const result = myTag `이름은 ${name} 입니다.`;
+var name = 'ooo';
+var result = myTag `이름은 ${name} 입니다.`;
 
 
 // 방법2
-const myTag = (str, func) => {
+var myTag = (str, func) => {
     return str + func();
 };
 
-const myFunction = () => {
+var myFunction = () => {
     return '함수 사용';
 };
 
-const result = myTag `이렇게 ${ () => myFunction() }`;
+var result = myTag `이렇게 ${ () => myFunction() }`;
 ```
 
 
 
 ## symbol          
-: 심볼 반환    
-: Symbol 전역 함수로 생성하고 new 키워드 사용 불가               
+: 객체에 유일한 프로퍼티를 만들기 위해 사용  
+: 전역 함수로 생성하고 new 키워드 사용 불가               
+
+- Symbol.for()
+- Symbol.iterator
 
 ```js
-const symbol = Symbol('symbol description');
+(typeof Symbol() === 'symbol') == true
 
 
-const s1 = Symbol();
-const s2 = Symbol();
+var symbol = Symbol('symbol description');
 
+
+var s1 = Symbol();
+var s2 = Symbol();
 (s1 === s2) == false
 
 
-const obj = {};
-
-const symbol = Symbol();
+var obj = {};
+var symbol = Symbol();
 obj[symbol] = '0';
+(obj[symbol] === '0') == true
 
-obj[symbol] === '0'
 
-
-const symbol = Symbol();
-
-const obj = {
+var symbol = Symbol();
+var obj = {
     key : 'value',
     [symbol]: '0',
 };
+(obj[symbol] === '0') == true
 
-// Object.keys()와 Object.getOwnPropertyNames()에 속하지 않음  
-Object.getOwnPropertyNames(obj) == 'key'
 
-// 심볼 확인
+// 객체 프로퍼티 순회에 포함되지 않음
+// for in 문, Object.keys(), Object.getOwnPropertyNames()
+for(var i in obj){
+    console.log(i);
+}
+(Object.getOwnPropertyNames(obj) == 'key') == true
+(Object.getOwnPropertyNames(obj) == 'symbol') == false
+
+// 심볼 확인시
 Object.getOwnPropertySymbols(obj)
 ```
 
