@@ -13,6 +13,16 @@ var str2 = new String('');
 
 (typeof str1 === 'string') == true
 (typeof str2 === 'object') == true
+
+
+var str = 'string';
+var obj = new String('string');
+
+str.key = 'value';
+obj.key = 'value';
+
+(str.key === undefined) == true
+(obj.key === 'value') == true
 ```
 
 
@@ -29,6 +39,7 @@ length | 문자열의 길이 반환
 - [String.prototype.includes()](#stringprototypeincludes)
 - [String.prototype.indexOf()](#stringprototypeindexof)
 - [String.prototype.lastIndexOf()](#stringprototypelastindexof)
+- String.prototype.localeCompare()
 - [String.prototype.match()](#stringprototypematch)
 - [String.prototype.normalize()](#stringprototypenormalize)
 - [String.prototype.padEnd()](#stringprototypepadend)
@@ -39,9 +50,9 @@ length | 문자열의 길이 반환
 - [String.prototype.slice()](#stringprototypeslice)
 - [String.prototype.split()](#stringprototypesplit)
 - [String.prototype.startsWith()](#stringprototypestartswith)
-- String.prototype.substr()
-- String.prototype.substring()
+- [String.prototype.substring()](#stringprototypesubstring)
 - [String.prototype.toLowerCase()](#stringprototypelowercase)
+- String.prototype.toSource()
 - String.prototype.toString()
 - [String.prototype.toUpperCase()](#stringprototypetouppercase)
 - [String.prototype.trim()](#stringprototypetrim)
@@ -62,7 +73,7 @@ var str = 'string';
 
 
 ## String.prototype.charCodeAt()
-: 문자열에서 주어진 인덱스에 위치하는 문자의 코드 반환    
+: 문자열에서 주어진 인덱스에 위치하는 문자의 유니코드 반환    
 : 인덱스 범위를 벗어날 경우 NaN 반환   
 
 ```js
@@ -242,21 +253,24 @@ result = str.replace(/[a-z]/g , String.call.bind(str.toUpperCase) );
 
 
 ## String.prototype.search()
-: 문자열에 주어진 정규식으로 검색해 일치하면 1 반환
+: 문자열에 주어진 문자와 처음으로 일치하는 요소의 인덱스 반환    
+: 정규식 사용 가능   
 
 ```js
 var str = 'string'
-(str.search(/[^s]/) === 1) == true
+(str.search('ing') === 3) == true
+(str.search(/[ing]/) === 3) == true
 ```
 
 
 
 ## String.prototype.slice()
-: 문자열에 주어진 인덱스에 해당하는 문자를 추출하여 새 문자열로 반환  
+: 문자열에 주어진 시작 인덱스부터 종료 인덱스까지 부분 문자열 반환    
+: 음수를 사용할 경우 문자열 뒤에서 부터 시작   
 
 ```js
 var str = 'string';
-(str.slice(3,6) === 'ing') == true
+(str.slice(3, 6) === 'ing') == true
 ```
 
 
@@ -282,6 +296,30 @@ var str = 'string';
 str.startsWith('s', 0) == true
 str.startsWith('st', 0) == true
 str.startsWith('i', 3) == true
+```
+
+
+
+## String.prototype.substring()
+: 문자열에 주어진 시작 인덱스부터 종료 인덱스까지 부분 문자열 반환   
+
+```js
+var str = 'string';
+(str.substring(3) === 'ing') == true
+(str.substring(3, 6) === 'ing') == true
+```
+
+
+**substring() vs slice()**
+
+```js
+var str = 'string';
+
+(str.substring(-3) === 'string') == true
+(str.slice(-3) === 'ing') == true
+
+(str.substring(0, -3) === '') == true
+(str.slice(0, -3) === 'str') == true
 ```
 
 
