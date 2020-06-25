@@ -2,15 +2,19 @@
 
 - [Vue Instance Properties](#vue-instance-properties)
 - [Vue Instance Methods](#vue-instance-methods)
-- [Vue Lifecycle Hooks](./vue-lifecycle-hooks.md)
 
 
 ```js
-const option = {
-    data : {},
+const options = {
+    // Lifecycle
+    // Data
+    // DOM
+    // Assets
+    // Composition
+    // Misc
 };
 
-const vm = new Vue(option);
+const vm = new Vue(options);
 
 
 
@@ -64,6 +68,7 @@ var child = {
 };
 
 new Vue({
+
     el : '#app',
 
     components : {
@@ -92,20 +97,6 @@ vm.$interpolate() | 제거
 vm.$log()         | 제거
 
 
-
-**Events**
-
-메소드 | 설명
----|---
-vm.$dispatch()  | 제거
-vm.$broadcast() | 제거
-vm.$emit()      | 현재 vue 인스턴스에서 이벤트 트리거
-vm.$on()        | 현재 vue 인스턴스에서 정의된 이벤트 수신
-vm.$once()      | 현재 vue 인스턴스에서 정의된 이벤트 한 번만 수신
-vm.$off()       | 현재 vue 인스턴스에서 정의된 이벤트 수신 중지
-
-
-
 **DOM**
 
 메소드 | 설명
@@ -116,6 +107,17 @@ vm.$before()   | 제거
 vm.$remove()   | 제거
 
 
+**Events**
+
+메소드 | 설명
+---|---
+vm.$emit()      | 현재 vue 인스턴스에서 이벤트 트리거
+vm.$on()        | 현재 vue 인스턴스에서 정의된 이벤트 수신
+vm.$once()      | 현재 vue 인스턴스에서 정의된 이벤트 한 번만 수신
+vm.$off()       | 현재 vue 인스턴스에서 정의된 이벤트 수신 중지
+vm.$dispatch()  | 제거
+vm.$broadcast() | 제거
+
 
 **Lifecycle**
 
@@ -123,7 +125,7 @@ vm.$remove()   | 제거
 ---|---
 vm.$mount()       | vue 인스턴스를 명시적으로 마운트하는 메소드
 vm.$destroy()     | vue 인스턴스를 완전히 제거를 위한 메소드
-vm.$forceUpdate() | vue 인스턴스를 다시 렌더링함
+vm.$forceUpdate() | vue 인스턴스를 다시 렌더링
 vm.$nextTick()    | DOM 업데이트 후 실행될 콜백을 연기하기 위한 메소드
 vm.$addChild()    | 제거, 자식 인스턴스를 현재 인스턴스에 추가하는 메소드
 vm.$compile()     | 제거, DOM 요소를 부분적으로 컴파일하는 메소드
@@ -141,13 +143,6 @@ var vm = new Vue();
 setTimeout(() => {
     vm.$mount('#app');
 }, 3000);
-
-
-
-/* $nextTick() */
-// : DOM이 브라우저에 렌더링되지 않았는데 이때 DOM에 접근하면 오류
-var vm = new Vue({
-});
 </script>
 ```
 
