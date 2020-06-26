@@ -112,7 +112,7 @@ Vue.nextTick(() => {
 
 ```html
 <div id="app">
-    <p>{{ object.value }}</p>
+    <p>{{ obj.value }}</p>
 </div>
 
 <script>
@@ -122,13 +122,13 @@ var vm = new Vue({
 
     data() {
         return {
-            object : {}
+            obj : {}
         }
     },
 
 });
 
-Vue.set(vm.object, 'value', 1);
+Vue.set(vm.obj, 'value', 1);
 
 </script>
 ```
@@ -142,7 +142,7 @@ Vue.set(vm.object, 'value', 1);
 
 ```html
 <div id="app">
-    <p>{{ object.value }}</p>
+    <p>{{ obj.value == null }}</p>
 </div>
 
 <script>
@@ -152,13 +152,13 @@ var vm = new Vue({
 
     data() {
         return {
-            object : {}
+            obj : {}
         }
     },
 
 });
 
-Vue.set(vm.object, 'value', 0);
+Vue.delete(vm.obj, 'value');
 
 </script>
 ```
@@ -213,7 +213,7 @@ Vue.set(vm.object, 'value', 0);
 ## Vue.compile
 : 주어진 템플릿 문자열을 렌더링 함수로 컴파일
 
-> Vue.compile(`template`)
+> Vue.compile('template')
 
 - render
 - staticRenderFns
@@ -253,6 +253,10 @@ new Vue({
 : 설치된 vue 버전을 문자열로 반환
 
 > Vue.version
+
+```js
+(Vue.version === '2.6.11') == true
+```
 
 
 
