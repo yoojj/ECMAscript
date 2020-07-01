@@ -7,10 +7,10 @@
     - [methods](#methods)
     - [computed](#computed)
     - [watch](#watch)
-- DOM
-- Assets
-- Composition
-- Misc
+- [DOM](./vue-options-dom.md)
+- [Assets](./vue-options-assets.md)
+- [Composition](./vue-options-composition.md)
+- [Misc](./vue-options-misc.md)
 
 
 
@@ -159,10 +159,10 @@ new Vue({
 
 ## computed
 : 데이터 조작과 관련된 기능을 추가하기 위한 속성    
-: data 속성의 변경 사항을 추적하여 데이터가 변경될 경우 로직을 다시 수행      
+: data 속성의 변경 사항을 추적하여 데이터 변경마다 수행      
 
 **computed vs methods**    
-: computed 속성은 데이터가 변경되지 않았다면 이전 값을 캐싱하고 methods 속성은 호출마다 로직 수행       
+: computed 속성은 데이터가 변경되지 않았다면 이전 값을 캐싱하고 methods 속성은 호출마다 수행    
 
 
 ```html
@@ -208,11 +208,16 @@ new Vue({
 : 데이터 변경시 특정 기능을 추가하기 위한 속성    
 : data 속성의 변경 사항을 추적하여 데이터가 변경될 경우 지정된 콜백 실행  
 
+**옵션**   
+- immediate : 페이지 로드 즉시 한 번 실행 여부 설정
+- deep : 중첩 데이터 변경 감지 여부 설정 
+- handler : 변경 발생시 호출할 함수
+
+
 ```html
 <div id="app">
     <p>{{ date }}</p>
     <p>{{ getDate }}</p>
-    <p>{{ count }}</p>
 </div>
 
 <script>
@@ -229,9 +234,14 @@ var vm = new Vue({
 
     watch : {
         date(val, oldVal) {
-            console.log('watch');
             this.count += 1;
         },
+        count : {
+            deep: true,
+            handler(){
+                console.log('count : ' + this.count);
+            }
+        }
     },
 
     computed : {
