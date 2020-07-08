@@ -18,7 +18,7 @@
 new Vue({
 
     directives : {
-        'v-directive' : {
+        'directive-name' : {
             bind(el, binding, vnode) {
                 // el : 디렉티브가 바인딩된 요소
 
@@ -28,9 +28,9 @@ new Vue({
                 if (binding.modifiers['some']) {}
 
                 // vnode : vue 컴파일러가 만든 버추얼 노드
-            }
+            },
         }
-    }
+    },
 
 });
 ```
@@ -46,21 +46,29 @@ unbind   | 디렉티브가 요소에서 언바인딩 될 때 한 번만 호출
 
 
 ## components
-: vue 컴포넌트 생성
+: vue 컴포넌트 생성   
+
+**component**  
+: 재사용 가능한 코드를 컴포넌트로 묶어 사용   
+: 부모와 자식 컴포넌트 관계에서 상위 컴포넌트의 요소 확장 가능   
+: 생성된 컴포넌트는 각각 독립적인 단위를 갖음   
+
 
 ```html
 <div id="app">
-    <component-name :val="str"></component-name>
+    <component-name v-bind:val="str"></component-name>
 </div>
 
 <script>
 new Vue({
 
-    el: app,
+    el : app,
 
-    data: () => ({
-        str : 'string',
-    }),
+    data() {
+        return {
+            str : 'string',     
+        }
+    },
 
     components : {
         'component-name' : {
@@ -92,11 +100,13 @@ new Vue({
 <script>
 new Vue({
 
-    el: app,
+    el : app,
 
-    data: () => ({
-        str : 'string',
-    }),
+    data() {
+        return {
+            str : 'string',     
+        }
+    },
 
     filters : {
         filter(val) {
