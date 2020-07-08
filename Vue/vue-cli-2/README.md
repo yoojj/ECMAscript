@@ -13,7 +13,8 @@ $ npm run dev
 ```
 
 
-**vue template**
+
+## Vue Template
 
 - simple
 - webpack
@@ -42,6 +43,7 @@ http://vuejs-templates.github.io/webpack/structure.html
 ├── index.html      # SPA를 위한 템플릿
 └── package.json    
 ```
+
 
 
 [top](#)
