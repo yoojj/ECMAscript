@@ -21,9 +21,9 @@
 </div>
 
 <script>
-var vm = new Vue({
-    //el : app,
+    var vm = new Vue({
     el : '#app',
+    el : app,
 });
 
 (vm.$el === document.getElementById('app')) == true
@@ -39,7 +39,8 @@ new Vue({
 
 ## template
 : 마크업으로 사용될 문자열을 정의하는 속성   
-: template 속성 사용시 el 속성과 마운트된 요소를 대체함   
+: template 속성 사용시 el 속성과 마운트된 요소를 대체       
+: template 속성에 정의된 요소는 render() 함수를 통해 가상 DOM으로 변환   
 
 ```html
 <div id="app">
@@ -47,11 +48,11 @@ new Vue({
 </div>
 
 <script>
-var vm = new Vue({
+new Vue({
 
-    el : '#app',
+    el : app,
 
-    template : `<div></div>`,
+    template : `<div id="template"></div>`,
 
 });
 </script>
@@ -72,7 +73,7 @@ var compiled = Vue.compile(`<p>{{ date }}</p>`);
 
 new Vue({
 
-    el : '#app',
+    el : app,
 
     data() {
         return {
@@ -110,16 +111,16 @@ new Vue({
 
 ## renderError
 : render 속성에 오류가 발생할 경우 오류 출력을 위해 사용하는 속성   
-: 개발 모드에서만 작용    
+: 개발 모드에서만 사용       
 
 ```html
 <div id="app">
 </div>
 
 <script>
-var vm = new Vue({
+new Vue({
 
-    el : '#app',
+    el : app,
 
     render(createElement) {
         throw new Error('render');
