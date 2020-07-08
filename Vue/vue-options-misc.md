@@ -47,18 +47,20 @@ new Vue({
 </div>
 
 <script>
-var vm = new Vue({
+new Vue({
 
     el : app,
 
     delimiters : ['<%', '%>'],
 
-    data : () => ({
-        obj : {
-            str : 'string',
-            num : 'number',
+    data() {
+        return {
+            obj : {
+                str : 'string',
+                num : 'number',
+            }        
         }
-    }),
+    },
 
 });
 </script>
@@ -67,13 +69,12 @@ var vm = new Vue({
 
 
 ## functional
-: 함수형 컴포넌트
-: data 속성과 컨텍스트가 없음   
-
+: 함수형 컴포넌트   
+: data 속성과 컨텍스트 없음   
 
 ```html
 <div id="app">
-    <child v-bind:text-content.prop="obj"></child>
+    <component-name v-bind:text-content.prop="obj"></component-name>
 </div>
 
 <script>
@@ -91,22 +92,24 @@ new Vue({
 
     el : app,
 
-    data : () => ({
-        obj : {
-            str : 'string',
-            num : 'number',
+    data() {
+        return {
+            obj : {
+                str : 'string',
+                num : 'number',
+            }        
         }
-    }),
+    },
 
     components : {
-        child,
-    }
+        'component-name' : child,
+    },
 
 });
 </script>
 
 
-<!-- SFC 경우 -->
+<!-- SFC -->
 <template functional>
 </template>
 
