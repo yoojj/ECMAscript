@@ -15,12 +15,12 @@
 
 
 ## data
-: vue 인스턴스가 관리하는 데이터 객체
+: vue 인스턴스가 관리하는 데이터 객체나 함수  
 
 ```js
 var vm = new Vue({
 
-    // 모든 vue 인스턴스에서 참조
+    // 객체인 경우 모든 vue 인스턴스에서 참조
     // data : {},
 
     data() {
@@ -65,7 +65,7 @@ function initData(vm) {
     }
 }
 
-function observe(value, asRootData) {...}
+function observe(value, asRootData) { .. }
 ```
 
 
@@ -82,7 +82,7 @@ function observe(value, asRootData) {...}
 
 ```html
 <div id="app">
-    <v-component :propsdata="obj"></v-component>
+    <component-name :propsdata="obj" />
 </div>
 
 <script>
@@ -104,20 +104,20 @@ var child = {
 // 상위 컴포넌트
 new Vue({
 
-    el : '#app',
-
-    components : {
-        VComponent : child,
-    },
+    el : app,
 
     data() {
         return {
             obj : {
                 str : 'string',
-                num : 12345,
+                num : 'number',
             },
         }
-    }
+    },
+
+    components : {
+        ComponentName : child,
+    },
 
 });
 </script>
@@ -162,7 +162,7 @@ new Vue({
 : data 속성의 변경 사항을 추적하여 데이터 변경마다 수행      
 
 **computed vs methods**    
-: computed 속성은 데이터가 변경되지 않았다면 이전 값을 캐싱하고 methods 속성은 호출마다 수행    
+: computed 속성은 데이터가 변경되지 않았다면 이전 값을 캐싱하고 methods 속성은 호출마다 로직 수행    
 
 
 ```html
@@ -206,11 +206,11 @@ new Vue({
 
 ## watch
 : 데이터 변경시 특정 기능을 추가하기 위한 속성    
-: data 속성의 변경 사항을 추적하여 데이터가 변경될 경우 지정된 콜백 실행  
+: data 속성의 변경 사항을 추적하여 데이터가 변경될 경우 지정된 로직 실행  
 
 **옵션**   
 - immediate : 페이지 로드 즉시 한 번 실행 여부 설정
-- deep : 중첩 데이터 변경 감지 여부 설정 
+- deep : 중첩 데이터 변경 감지 여부 설정
 - handler : 변경 발생시 호출할 함수
 
 
@@ -237,8 +237,8 @@ var vm = new Vue({
             this.count += 1;
         },
         count : {
-            deep: true,
-            handler(){
+            deep : true,
+            handler() {
                 console.log('count : ' + this.count);
             }
         }
