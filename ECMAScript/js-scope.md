@@ -5,7 +5,7 @@
 
 
 ## Lexical Scope
-= 정적 스코프, 어휘적 스코프, 수사적 스코프   
+= 정적 스코프, 수사적 스코프    
 <> Dynamic Scope    
 
 : 렉싱 타임시 어휘 범위 결정    
@@ -24,8 +24,8 @@
 = 스코프 체인, 스코프 버블   
 : JS 엔진이 현재 스코프에서 해당하는 변수를 검색하고 발견하지 못했을 경우 상위 스코프를 탐색하여 최후에는 글로벌 스코프에 도달하고 글로벌 스코프에서도 찾지 못하면 검색을 멈추고, RHS 참조시 ReferenceError를 반환하고 LHS 참조시 (엄격 모드가 아닐 경우) 글로벌 스코프에 해당 변수 생성을 요청  
 
-- LHS - left hand side  ex. i = 0;
-- RHS - right hand side  ex. console.log(a);
+- LHS(left hand side)  ex. i = 0;
+- RHS(right hand side)  ex. console.log(a);
 
 
 **Variable Shadowing**    
@@ -40,8 +40,8 @@ var        | function      | Declaration
 let        | block         | Temporal Dead Zone
 const      | block         | Temporal Dead Zone
 function   | block         | Complete
-class      | block         | x
-import     | global module | Complete
+class      | block         | Temporal Dead Zone
+import     | module        | Complete
 
 
 **scope vs context**    
@@ -66,6 +66,20 @@ const obj = {
 
 const result = obj.func();
 (result === 1) == true
+
+
+// 화살표 함수 주의
+var num = 0;
+const obj = {
+    num : 1,
+    context : this.num,
+    func : () => {
+        return this.num
+    }
+};
+
+const result = obj.func();
+(result === 0) == true
 ```
 
 
@@ -76,15 +90,13 @@ const result = obj.func();
 : 전역 스코프에서 변수 선언시 전역 변수가 되어 어디서든 접근 가능      
 : 플랫폼에 따라 전역 객체가 다르므로 여러 환경에서 실행된다면 globalThis 키워드 사용  
 
-- window : 브라우저
-- self : 웹 워커
-- global : 노드
+- node - global
+- browser - window
+- web worker - self
 
 
 ```js
-// 브라우저
 (this.Date === window.Date) == true
-
 
 function isTrue(){
     console.log(Date === this.Date);
@@ -101,6 +113,7 @@ function isFalse(){
 ### Function Scope
 : 함수 안에서 선언된 변수는 해당 함수 내에서만 유효 범위를 갖음  
 
+**키워드**    
 - var
 
 ```js
@@ -119,6 +132,7 @@ const result = func();
 : 가장 가까운 중괄호-block을 유효 범위로 지정     
 : (화살표 함수를 제외한) 함수 스코프의 서브셋    
 
+**키워드**    
 - let
 - const
 
