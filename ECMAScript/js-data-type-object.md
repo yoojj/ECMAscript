@@ -1,6 +1,7 @@
 # JS Object Type
 = Non-Primitive, Reference type, Complex type, Composite Data Type          
 : 여러 프로퍼티를 갖을 수 있는 컨테이너        
+: 키와 값을 쌍으로 순서없이 저장    
 
 
 **일급 객체**   
@@ -18,7 +19,7 @@
 
 
 ## Native Object
-= Built-in Object    
+= Built-in Object, Standard Object      
 : 스펙에 정의된 기본 객체     
 : 전역에서 사용 가능  
 
@@ -31,6 +32,7 @@
 - [Number](./js-obj-number.md)
 - [String](./js-obj-string.md)
 - [Symbol](./js-obj-symbol.md)
+
 
 **단계**    
 1. 프리미티브 값에 프로퍼티를 사용해야 할 경우
@@ -100,6 +102,7 @@ decodeURIComponent() | encodeURIComponent() 퍼센트 인코딩한 URI 디코딩
 
 ## User Defined Object
 
+- [팩토리 함수](#팩토리-함수)
 - [생성자 함수](#생성자-함수)
 - [prototype](#prototype)
 - [class (ES6)](#class)
@@ -134,6 +137,11 @@ obj.method = function(){ };
 // 객체에 프로퍼티가 있는지 확인
 ('key' in obj) == true
 
+// 주의
+var obj = { key : null };
+(Boolean(obj.key) === false) == true
+
+
 // 객체의 프로퍼티 제거
 delete obj.key
 
@@ -159,8 +167,29 @@ var obj = {
 
 
 
+### 팩토리 함수  
+: 객체를 반환하는 함수
+
+```js
+function User(name){
+    return {
+        name,
+        getName() {
+            return this.name;
+        },
+    }
+}
+
+var a = User('A');
+(a.getName() === 'A') == true
+```
+
+
+
 ### 생성자 함수
-: new 연산자를 통해 객체를 생성할 수 있는 함수   
+: new 연산자를 통해 객체를 생성하는 함수    
+: 일반 함수에 new 연산자를 사용하면 생성자로 동작      
+: 생성자 함수를 통해 만들어진 객체는 해당 생성자를 데이터 타입으로 갖음      
 
 ```js
 var User = function(name){
@@ -192,16 +221,6 @@ var c = User();
 var User = function(name){
     if((this instanceof User) == false)
         return new User(name);
-
-    this._name = name;
-
-    this.getName = function(){
-        return this._name;
-    };
-
-    this.setName = function(name){
-        this._name = name;
-    };
 }
 
 var c = User();
@@ -242,8 +261,10 @@ a.PIN = 0;
 
 
 
-### prototype 
+### prototype
 : 동일한 기능을 하는 메소드를 공유하기 위한 특별한 객체    
+: 생성자 함수로 만들어진 객체의 메소드는 객체 수 만큼 중복되어 생성되므로   
+&nbsp; 생성자 함수에는 객체의 고유한 속성만 정의하고 동일한 속성이나 기능은 프로토타입 객체에 정의    
 
 ```js
 var User = function(name){
@@ -266,8 +287,7 @@ User.prototype.setName = function(name){ this._name = name }
 ```js
 // ES6 이전
 var User = {
-    // 생성자 함수
-    init : function(name){
+    init : function(name) {
         this._name = name;
         this.getName = function(){ return this._name };
         this.setName = function(name){ this._name = name };    
