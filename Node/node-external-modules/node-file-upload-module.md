@@ -1,6 +1,7 @@
-# node file upload module
+# Node File Upload Module
 
 - busboy (https://github.com/mscdex/busboy)
+    - express-fileupload
     - [multer](#multer)
 - multiparty
 - formidable
@@ -8,6 +9,7 @@
 
 
 ## multer
+: multipart/form-data 처리
 
 ```bash
 $ npm install multer
@@ -98,3 +100,7 @@ const upload = multer({
     storage : multer.memoryStorage()
 });
 ```
+
+
+
+[top](#)
