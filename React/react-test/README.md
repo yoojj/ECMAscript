@@ -3,10 +3,16 @@
 ```bash
 $ npm init -y
 $ npm install react react-dom
-$ npm install @babel/core @babel/preset-env @babel/preset-react
-$ npm install webpack webpack-cli webpack-dev-server babel-loader html-webpack-plugin
+$ npm install --save-dev @babel/core @babel/preset-env @babel/preset-react
+$ npm install --save-dev webpack webpack-cli webpack-dev-server\
+babel-loader html-webpack-plugin
 
+# development
+## http://localhost:8000/webpack-dev-server
 $ npm start
+
+# production
+$ npm run build
 ```
 
 
