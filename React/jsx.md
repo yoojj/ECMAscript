@@ -4,7 +4,7 @@ JavaScript XML
 : 리액트 컴포넌트에서 사용할 리액트 객체 트리를 작성하기 위한 문법 체계    
 : html과 유사한 마크업을 지원하지만 html 명세를 완벽하게 따르지 않음      
 : 템플릿 언어가 아니며 조건문과 제어문 사용 불가능          
-: 트랜스파일러를 통해 JS로 변환됨   
+: 트랜스파일러를 통해 ReactElement로 변환됨   
 
 
 JSX 명세    
@@ -15,19 +15,24 @@ https://babeljs.io/repl/
 
 
 ```js
-const jsx = <JSXElementName JSXAttributes="JSXAttributeValue" JSXAttributes={AssignmentExpression}>
+<JSXElementName JSXAttributes="JSXAttributeValue" JSXAttributes={AssignmentExpression}>
     JSXChildren
 </JSXElementName>
-
-ReactDOM.render(jsx, document.getElementById('app'));
-
-
-const Component = React.createClass();
-class Component extends React.Component{}
-
-ReactDOM.render(<Component />, document.getElementById('app'));
 ```
 
+
+**JSXElement vs ReactElement**
+```js
+const jsx = <div className="some-class"><p>text</p></div>
+
+const el = React.createElement('div', { className:'some-class' },
+    React.createElement('p', null, `text`)
+);
+```
+
+
+
+## JSX 문법
 
 **표현식**
 ```js
@@ -59,10 +64,12 @@ const jsx = <div customAttribute=""></div>;
 ```
 
 
-**ref**  
+**DOM 접근**  
 ```js
 // this.refs.element
 const jsx = <div ref="element"></div>
+
+const input = <input type="text" ref={ (ref) => this.input.ref } />
 ```
 
 
