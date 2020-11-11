@@ -1,4 +1,4 @@
-# React API
+# react
 
 - Component()
 - PureComponent()
