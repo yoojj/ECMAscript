@@ -35,13 +35,7 @@ $ npm install gulp
 $ npm install gulp-uglify
 
 # 3. gulpfile.js 파일 생성 후 태스크 정의
-## 구조
-example/
-├── node_modules/
-├── 개발/            
-├── 배포/
-├── gulpfile.js   
-└── package.json     
+## gulpfile.js   
 
 # 4. 태스크 실행
 $ gulp [task-name]
@@ -49,17 +43,14 @@ $ gulp [task-name]
 
 
 **gulpfile.js**   
-: 빌드 과정 기술 파일
-
 ```js
-const gulp = require('gulp');
-const uglify = require('gulp-uglify');
+var gulp = require('gulp');
+var uglify = require('gulp-uglify');
 
 
 // 걸프 실행시 기본으로 실행될 태스크  
 gulp.task('default', function(){
     // 걸프 작업 작성
-    console.log('gulp test');
 });
 
 gulp.task('js', function(){
@@ -102,7 +93,7 @@ $ npm install browserify -g
 $ browserify [파일.js] --outfile [bundle.js]
 $ browserify [파일.js] -o [bundle.js]
 
-## index.html
+# index.html
 <html>
     <script src="bundle.js"></script>
 </html>
@@ -149,7 +140,7 @@ $ webpack [엔트리파일.js] [bundle.js]
 - [webpack plugin](#webpack-plugin)
 
 ```js
-const webpack = require('webpack');
+var webpack = require('webpack');
 
 module.export = {
     mode: 'development | production | none',
@@ -224,7 +215,7 @@ $ npm install mini-css-extract-plugin
 
 
 # 2. 웹팩 환경 설정에 로더 추가
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module: {
     rules: [
@@ -242,15 +233,15 @@ module: {
             ]
         },
         {
-          test: /\.(gif|png|jpe?g|svg)$/i,
-          test: /\.(woff|woff2|eot|ttf|otf|)$/,
-          use: 'file-loader'
+            test: /\.(gif|png|jpe?g|svg)$/i,
+            test: /\.(woff|woff2|eot|ttf|otf|)$/,
+            use: 'file-loader'
         },
     ]
 },
 
 plugins: [
-  new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin(),
 ],
 ```
 
@@ -270,7 +261,7 @@ $ npm install clean-webpack-plugin html-webpack-plugin
 
 
 # 2. 웹팩 환경 설정에 플러그인 추가
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+var CleanWebpackPlugin = require('clean-webpack-plugin');
 
 plugins: [
     new CleanWebpackPlugin(['dist'])
