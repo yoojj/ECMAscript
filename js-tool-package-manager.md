@@ -8,6 +8,7 @@
 
 **종류**  
 - [NPM](#npm)
+    - [npx](#npx)
 - [Yarn](#yarn)
 - [Pnpm](#pnpm)
 - [Bower](#bower)
@@ -18,9 +19,10 @@
 
 
 
-## NPM
+## npm
 Node Package Manager   
-: 전역과 로컬에 각각 패키지를 설치할 수 있으며 옵션으로 지정하지 않으면 로컬 모드로 설치    
+: 패키지 매니저 + 빌드 툴     
+: 전역과 로컬에 각각 패키지를 설치할 수 있으며 옵션을 지정하지 않으면 로컬 모드로 설치    
 : npm@5 부터 --save 옵션 기본 설정  
 
 
@@ -30,9 +32,6 @@ https://npm.pkg.github.com
 
 
 ```bash
-# 버전 확인
-$ npm --version
-
 # 최신 버전 설치
 $ npm install npm@latest -g
 
@@ -49,12 +48,13 @@ https://docs.npmjs.com/cli-documentation/cli
 
 
 ### package.json
-: 패키지 의존성 관리를 위한 매니페스트 파일      
+: 패키지 의존성 관리를 위한 매니페스트 파일    
+: 패키지에 관련된 모든 정보 설정        
 : name과 version을 통해 고유성 판별  
 
 
 ```bash
-# 파일 생성
+# package.json 생성
 $ npm init -y
 
 # 패키지 설치 및 업데이트
@@ -65,24 +65,34 @@ $ npm update 패키지
 # 패키지 확인
 $ npm list
 $ npm list installed
+
+# package.json에 명시된 패키지 설치
+$ npm install
+
+# package.json에 명시되지 않은 패키지 제거
+$ npm prune
+
+# 스크립트 실행
+$ npm run [명령어]
 ```
 
 
 **package.json**
-
 ```json
 {
     "name": "첫 글자로 . 과 _ 기호 사용 불가, 대문자 사용 불가, 214자 미만",
-    "version": "1.0.0",
+    "version": "1.0.0",  
     "description": "",
     "main": "index.js",
     "scripts": {
+      "install" : "패키지 설치",
+      "lint": "eslint | jslint | ...",
       "test": "echo \"Error: no test specified\" && exit 1",
-      "lint": "",
       "unit": "",
-      "dev": "",
-      "start": "",
-      "build": ""
+      "bundle": "webpack | rollup | ...",
+      "build": "프로젝트 빌드",
+      "start": "프로젝트 실행",
+      "dev": ""
     },
     "dependencies": {},
     "devDependencies": {},
@@ -111,13 +121,13 @@ $ npm list installed
 속성 | 설명
 ---|---
 name         | 프로젝트나 패키지 이름
-version      | 현재 패키지 버전으로 패키지 변경시 버전 변경
+version      | 현재 패키지 버전  
 description  | 패키지 간략 설명
 private      | 패키지 공개 여부  
 main         | 패키지 진입점 명시  
-scripts      | 스크립트 정의  
+scripts      | 실행할 스크립트 정의  
 dependencies | 배포시 필요한 패키지 목록
-devDependencies  | 개발 환경에만 필요한 패키지 목록
+devDependencies  | 개발 환경에만 필요한 패키지 목록 --save-dev
 peerDependencies |
 bundledDependencies  |
 optionalDependencies |
@@ -132,7 +142,18 @@ contributors | 패키지 기여자
 license      | 패키지 라이센스 명시
 
 
-**패키지 버전 범위**
+**패키지 버전**   
+: npm은 [유의적 버전](https://semver.org/lang/ko/) 체계 사용   
+
+> 주버전.부버전.수버전
+
+- 주버전 : 기존 버전과 호환되지 않을 정도로 업데이트되는 경우 +
+- 부버전 : 기존 버전과 호환되며 새로운 기능이 추가된 경우 +
+- 수버전 : 기존 버전과 호환되며 버그를 수정한 경우 +
+
+
+**패키지 버전 범위**  
+: npm은 캐럿 범위을 기본으로 사용  
 
 버전 | 설명
 ---|---
@@ -184,15 +205,14 @@ $ npm init
 
 ### npx
 : npm@5.2.0 부터 추가된 패키지 러너  
-: 의존되는 패키지 최신 버전 자동 업데이트  
 
 ```bash
-$ npx create-react-app
+$ npx create-react-app example
 ```
 
 
 
-## Yarn
+## yarn
 Yarn Package Manager   
 
 
@@ -224,10 +244,12 @@ $ yarn config get registry
 $ yarn config set yarn-offline-mirror
 
 
-# package.json
-$ yarn init -y
+# 패키지관련 명령어
 $ yarn add 패키지
 $ yarn remove 패키지
+
+# package.json 생성  
+$ yarn init -y
 ```
 
 
@@ -237,7 +259,7 @@ https://yarnpkg.com/lang/en/docs/cli/
 
 **구조**    
 ```
-프로젝트/
+example/
 ├── node_modules/
 ├── package.json
 └── yarn.lock
@@ -251,7 +273,7 @@ https://yarnpkg.com/lang/en/docs/cli/
 
 
 
-## Pnpm
+## pnpm
 Performant Node Package Manager   
 : 전역에 한 개의 패키지만 설치하고 이를 링크해 로컬에서 사용      
 
@@ -270,8 +292,8 @@ $ pnpm uninstall 패키지
 $ pnpm config set pnpm-prefix 경로
 
 
-# package.json 파일 생성
-[프로젝트]$ pnpm init -y
+# package.json 생성
+$ pnpm init -y
 ```
 
 **pnpm command**  
@@ -280,7 +302,7 @@ https://pnpm.js.org/en/cli/add
 
 **구조**    
 ```
-프로젝트/
+example/
 ├── node_modules/
 ├── package.json
 └── pnpm-lock.yaml
@@ -292,12 +314,12 @@ https://pnpm.js.org/en/cli/add
 : npm의 npx와 동일한 기능을 하는 도구  
 
 ```bash
-$ pnpx create-react-app
+$ pnpx create-react-app example
 ```
 
 
 
-## Bower
+## bower
 : 플랫 디펜던시 트리 구조로 하나의 패키지 버전만 유지하여 충돌 방지    
 : JS, html, css, 폰트, 이미지 등 최소한 리소스 로드가 목표     
 
@@ -319,8 +341,8 @@ $ bower info 패키지
 $ bower list
 
 
-# bower.json 파일 생성
-[프로젝트]$ bower init -y
+# bower.json 생성
+$ bower init -y
 ```
 
 **bower command**  
@@ -329,14 +351,15 @@ https://bower.io/docs/api/#commands
 
 **구조**    
 ```
-프로젝트/
+example/
 ├── bower_components/
 └── bower.json
 ```
 
 
 
-## JSPM
+## jspm
+: 모듈 로더, 폴리필 기능  
 
 **jspm registry**  
 https://dev.jspm.io/  
@@ -348,25 +371,16 @@ $ npm install jspm -g
 $ jspm -v
 
 # 패키지 설치
-[프로젝트]$ jspm install npm:패키지
-[프로젝트]$ jspm install github:패키지
+$ jspm install npm:패키지
+$ jspm install github:패키지
 ```
 
 
 **구조**     
 ```
-프로젝트/
+example/
 ├── jspm_packages/
 └── jspm.json
-```
-
-
-### JSPM CDN
-
-```html
-<script type="module">
-import React from 'https://dev.jspm.io/react';
-</script>
 ```
 
 
