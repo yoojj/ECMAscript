@@ -1,10 +1,10 @@
 # JS Module
-: 네임스페이스 오염 등 문제점 보완 및 서버 사이드 환경에서 사용하기 위해 기능을 파일 단위로 모듈화하는 개발 방식 등장   
-: ES2015 이전에는 모듈 정의를 위한 문법적 지원이 없어 모듈 정의 패턴과 포맷을 사용     
-: ES2015 이후 문법 지원     
+: 네임스페이스 오염 등의 문제점 보완 및 서버 사이드 환경에서 사용하기 위해 기능을 파일 단위로 모듈화하는 개발 방식 등장   
+: ES6 이전에는 모듈 정의를 위한 문법적 지원이 없어 모듈 정의 패턴과 포맷을 사용     
+: ES6 이후 모듈 문법 지원     
 
 
-- 모듈 패턴
+- 모듈 정의 패턴
     - [즉시 실행 함수 표현식](#즉시-실행-함수-표현식)
     - [노출식 모듈 패턴](#노출식-모듈-패턴)
 - [모듈 포맷](#모듈-포맷)
@@ -28,7 +28,7 @@ Immediately Invoked Function Expression (IIFE)
 (() => { })();
 
 
-// function 키워드 앞에 일항 연산자를 붙여 함수 표현식으로 만들어 사용  
+// function 키워드 앞에 연산자를 붙여 함수 표현식으로 만들어 사용  
 -(function() { })();
 
 +(function() { })()
@@ -64,11 +64,11 @@ var Module = (function(){
 })();
 
 
-// 사용 방법1
+// 사용 방법 1
 Module.increase();
 
 
-// 사용 방법2
+// 사용 방법 2
 var module = new Module();
 module.increase();
 ```
@@ -77,8 +77,9 @@ module.increase();
 
 ## 모듈 포맷
 = 모듈 시스템   
-: 모듈 포맷으로 작성된 모듈을 실행하기 위해 해당 모듈 포맷 명세를 구현한 모듈 로더가 필요   
-: 브라우저에서 모듈 포맷 기반으로 작성된 모듈을 실행하기 위해 모듈 번들러 필요    
+
+! 모듈 포맷으로 작성된 모듈을 실행하기 위해서는 해당 모듈 포맷 명세를 구현한 모듈 로더 필요   
+! 브라우저에서 모듈 포맷 기반으로 작성된 모듈을 실행하기 위해서는 모듈 번들러 필요    
 
 
 **모듈 로더** (런타임 실행)         
@@ -121,7 +122,7 @@ ESM | export, import | CommonJS + AMD, 비동기
 ```js
 // module.exports
 // : 객체를 내보내기 위해 사용  
-module.exports = { }
+module.exports = {};
 
 var obj = {};
 module.exports.obj = obj;
@@ -136,6 +137,10 @@ exports.obj = obj;
 // require
 // : module에 정의된 객체를 불러옴  
 var module = require('./example');
+
+// 불러온 모듈은 캐싱되므로 별도 인스턴스가 필요하다면 new 키워드를 통해 인스턴스를 생성
+var Module = require('./example');
+var module = new Module();
 ```
 
 
@@ -168,27 +173,27 @@ Universal Module Definition
 
 ```js
 // 1. default export
-export default function(){ }
-export default function func(){ }
+export default function(){}
+export default function fn(){}
 export default class {}
 
 // 1. default export
-function func() { }
-export default { func }
+function fn() {}
+export default { fn }
 
 // 1. default export
 var obj = {};
-function func() { }
-export { obj, func as default }
+function fn() {}
+export { obj, fn as default }
 
 
 // 2. named export
-export function func() { }
+export function fn() {}
 
 // 2. named export
 var obj = {};
-function func() { }
-export { obj, func }
+function fn() {}
+export { obj, fn }
 ```
 
 
@@ -199,14 +204,14 @@ export { obj, func }
 
 ```js
 // 1. static import
-import { func } from 'example.js'
-func();
+import { fn } from 'example.js'
+fn();
 
-import { func as f } from 'example.js'
+import { fn as f } from 'example.js'
 f();
 
 import * as module from 'example.js'
-module.func();
+module.fn();
 
 
 // 2. dynamic import  
@@ -214,12 +219,17 @@ module.func();
 import('./example.js').them((module) => { });
 
 import( 조건 ? './example1.js' : './example2.js').then( );
+
+// async & await
+(async () => {
+    var module = await import('./example.js');
+})();
 ```
 
 
-**browser**  
-: 브라우저에서는 모듈 경로 입력 필수   
-: ESM을 지원하는 브라우저는 nomodule 속성이 정의된 스크립트는 무시함   
+**브라우저에서 모듈 사용**   
+! 브라우저에서는 모듈 경로 입력 필수     
+! ESM을 지원하는 브라우저는 nomodule 속성이 정의된 스크립트는 무시함    
 
 ```html
 <!-- 방법 1 -->
@@ -229,7 +239,7 @@ import( 조건 ? './example1.js' : './example2.js').then( );
 
 <!-- 방법 2 -->
 <script type="module">
-import { func } from './example.js'
+import { fn } from './example.js'
 </script>
 
 <script nomodule>
