@@ -8,7 +8,10 @@ $ npm install create-react-app -g
 $ create-react-app example
 
 $ npm install react-router-dom react-router react-redux ...
-$ npm install --save-dev babel-loader babel-plugin-module-resolver ...  
+$ npm install --save-dev babel-loader babel-plugin-import babel-plugin-module-resolver ...  
+
+# webpack 재정의
+$ npm install --save-dev copy-webpack-plugin react-app-rewired
 ```
 
 **기본 구조**  
