@@ -1,0 +1,8 @@
+/***** 사이드 네비 *****/
+.component-side-nav {}
+.component-side-nav .active {color:red;}
+
+
+
+/***** 전체 네비 *****/
+.component-global-nav {}
