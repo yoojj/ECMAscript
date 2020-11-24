@@ -1,14 +1,16 @@
 # JS Array
 : 인덱스가 있는 요소 집합       
-: JS Array는 연속된 요소에 인덱스가 부여되는 것이 아니고 요소와 인덱스를 연결     
+: JS Array는 연속된 요소에 인덱스가 부여된 것이 아니고 요소와 인덱스를 연결 (Hashtable Object)            
 : 요소가 없는 인덱스를 갖을 수 있음  
 : 기능이 추가된 특수한 객체(Exotic Object)로 프로퍼티를 갖을 수 있음     
 
 
 - [희소 배열](#희소-배열)
 - [연관 배열](#연관-배열)
+- [유사 배열](#유사-배열)
 - [다차원 배열](#다차원-배열)
 - [형식화 배열 (ES6)](#형식화-배열)
+
 
 
 ```js
@@ -169,8 +171,8 @@ arr[10000] = 0;
 
 ## 희소 배열  
 sparse array   
-: 인덱스에 대응하는 요소가 없는-홀이 있는 배열   
-: 희소 배열인 경우 배열의 length 가 요소 개수보다 큼   
+: 홀(인덱스에 대응하는 요소가 없는)이 있는 배열   
+: 희소 배열인 경우 배열의 길이가 요소의 개수보다 큼   
 
 **V8에서 희소 배열 처리를 위해 사용하는 배열 저장소**  
 - linear storage
@@ -178,11 +180,12 @@ sparse array
 
 ```js
 // 희소 배열
-var arr = new Array(10);
+var arr = new Array(100);
+
 var arr = [,,,];
 
 var arr = [];
-arr[10] = 0;
+arr[100] = 0;
 
 
 // 희소 배열 요소 확인
@@ -197,10 +200,10 @@ var arr = new Array(100);
 
 // V8은 희소 배열을 키와 값(100 : value)과 설명자를 쌍으로 저장 -- DICTIONARY_ELEMENTS
 arr[100] = 'value';
-(arr[0] === undefined) == true
 
-arr.hasOwnProperty(100) == true  
+(arr[0] === undefined) == true
 arr.hasOwnProperty(0) == false
+arr.hasOwnProperty(100) == true  
 
 
 // 희소 배열 순회
@@ -243,8 +246,12 @@ var arr = new Array(undefined, undefined, undefined);
 ## 연관 배열  
 associative array  
 : 문자열 키를 사용하는 배열   
-: JS는 연관 배열을 지원하지 않으나 Array가 객체이므로 문자열 프로퍼티 키 추가 가능     
-: 문자열 키가 숫자형으로 변환이 불가능하면 배열의 인덱스에 영향을 미치지 않음    
+: JS Array는 연관 배열을 지원하지 않지만 Array가 객체이므로 문자열 키를 사용할 수 있으나             
+&nbsp; 문자열 키가 숫자형으로 변환이 불가능하면 배열의 인덱스에 영향을 미치지는 않음    
+
+\+ Map   
+https://github.com/yoojj/JS/blob/master/ECMAScript/object/js-obj-map.md
+
 
 ```js
 var arr = [1, 2, 3, 4, 5];
@@ -265,6 +272,26 @@ arr['2'] = 'c';
 
 (arr.toString() === 'a,b,c') == true
 (arr.length === 3) == true
+```
+
+
+
+## 유사 배열
+: 배열이 아니나 배열처럼 사용 가능한 객체  
+
+\+ Aguments   
+https://github.com/yoojj/JS/blob/master/ECMAScript/object/js-obj-aguments.md
+
+```js
+var obj = {
+    1: 'a',
+    2: 'b',
+    3: 'c',
+};
+
+for(var i in obj){
+    console.log(obj[i]);
+}
 ```
 
 
@@ -294,7 +321,10 @@ for(var i=0, len = arr.length ; i<len ; ++i){
 
 ## 형식화 배열
 typed array    
-: Web API(audio, video, canvas, WebSocket, WebGL 등)의 바이너리 데이터를 효율적으로 처리하기 위한 배열    
+: JS Array를 다른 언어의 배열처럼 연속된 메모리 블록을 사용하기 위한 배열     
+: Web API(audio, video, canvas, WebSocket, WebGL 등)의 바이너리 데이터를 효율적으로 처리하기 적합         
+
+ex.
 
 ```js
 var f64 = new Float64Array(8);
