@@ -1,7 +1,7 @@
 # JS Object Type
-= Non-Primitive, Reference type, Complex type, Composite Data Type          
+= Non-Primitive, Reference Type, Complex Type, Composite Data Type          
 : 여러 프로퍼티를 갖을 수 있는 컨테이너        
-: 키와 값을 쌍으로 순서없이 저장    
+: 키와 값을 쌍으로 순서없이 저장   
 
 
 **일급 객체**   
@@ -11,14 +11,14 @@
 
 
 **분류**  
-- [네이티브 객체](#native-object)
-- [호스트 객체](#host-object)
-- [전역 객체](#global-object)
-- [사용자 정의 객체](#user-defined-object)
+- [1.네이티브 객체](#1native-object)
+- [2.호스트 객체](#2host-object)
+- [3.전역 객체](#3global-object)
+- [4.사용자 정의 객체](#4user-defined-object)
 
 
 
-## Native Object
+## 1. Native Object
 = Built-in Object, Standard Object      
 : 스펙에 정의된 기본 객체     
 : 전역에서 사용 가능  
@@ -35,9 +35,9 @@
 
 
 **단계**    
-1. 프리미티브 값에 프로퍼티를 사용해야 할 경우
+1. 프리미티브 값에 프로퍼티나 메소드를 사용하는 경우
 2. JS 엔진에 의해 값을 임시 객체로 변환해
-3. 프로퍼티를 사용한 뒤 임시 객체 제거      
+3. 프로퍼티나 메소드를 사용한 뒤 임시 객체 제거      
 
 
 ```js
@@ -54,16 +54,16 @@ var str = new String('string');
 
 
 
-## Host Object  
+## 2. Host Object  
 : 호스트 환경(실행 환경)에서 제공하는 객체  
 : 해당 호스트에 특화된 객체로 명세에 정의되지 않음   
 
 
 
-## Global Object  
+## 3. Global Object  
 = 전역 객체, 루트 객체, 최상위 객체      
 : 전역 프로퍼티, 전역 함수, 특별한 객체를 제외한 모든 객체들은 전역 객체의 자손    
-: 전역 객체가 가장 먼저 생성되어 전역 객체의 프로퍼티 사용 가능  
+: 전역 객체가 가장 먼저 생성므로 전역 객체의 프로퍼티 사용 가능  
 : 전역 객체는 생성자가 없어 new 키워드로 생성 불가능      
 
 
@@ -74,7 +74,7 @@ var str = new String('string');
 
 
 #### Global Object API
-: 호스트에 따라 프로퍼티가 추가될 수 있음    
+: 호스트에 따라 다를 수 있음   
 
 전역 프로퍼티 & 전역 함수 | 설명
 ---|---
@@ -100,7 +100,7 @@ decodeURIComponent() | encodeURIComponent() 퍼센트 인코딩한 URI 디코딩
 
 
 
-## User Defined Object
+## 3. User Defined Object
 
 - [팩토리 함수](#팩토리-함수)
 - [생성자 함수](#생성자-함수)
@@ -110,6 +110,7 @@ decodeURIComponent() | encodeURIComponent() 퍼센트 인코딩한 URI 디코딩
 
 ```js  
 // 1. 리터럴  
+// : 객체 리터럴로 생성된 객체는 Object.prototype을 상속 받음
 var obj = {};
 
 // 2. 전역 함수
@@ -121,13 +122,11 @@ var obj = new Object();
 
 // 프로퍼티 추가
 obj.key;
-
-// 문자열 프로퍼티 추가
-obj['키'];
+obj['key'];
 
 // 프로퍼티에 값 할당
 obj.key = 'value';
-obj['키'] = 'value';
+obj['key'] = 'value';
 
 
 // 메소드 추가
@@ -142,7 +141,7 @@ var obj = { key : null };
 (Boolean(obj.key) === false) == true
 
 
-// 객체의 프로퍼티 제거
+// 프로퍼티 제거
 delete obj.key
 
 
