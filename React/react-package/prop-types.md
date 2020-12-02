@@ -1,11 +1,26 @@
 # prop-types
 
 ```bash
-# https://www.npmjs.com/package/prop-types
 $ npm install prop-types
 ```
 
-ex.
+- PropTypes.bool
+- PropTypes.number
+- PropTypes.string
+- PropTypes.symbol
+- PropTypes.object
+- PropTypes.array
+- PropTypes.func
+- PropTypes.element
+- PropTypes.node
+- PropTypes.instanceOf()
+- PropTypes.oneOf()
+- PropTypes.arrayOf()
+- PropTypes.objectOf()
+- PropTypes.shape()
+
+
+
 ```js
 import PropTypes from 'prop-types';
 
@@ -26,24 +41,24 @@ CustomComponent.defaultProps = {
 }
 
 CustomComponent.propTypes = {
-    key: PropTypes.string
+
+    key: PropTypes.string,
+    key: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.string,
+    ]),
+
+    option: PropTypes.oneOf(['A', 'B']),
+    array: PropTypes.arrayOf(PropTypes.number),
+    object: PropTypes.objectOf(PropTypes.number),
+    object: PropTypes.shape({
+        key: PropTypes.string
+    }),
+
+    customArray: PropTypes.arrayOf( (propValue, key, componentName, location, propName) => {
+    }),
 }
 ```
-
-- PropTypes.bool
-- PropTypes.number
-- PropTypes.string
-- PropTypes.symbol
-- PropTypes.object
-- PropTypes.array
-- PropTypes.func
-- PropTypes.element
-- PropTypes.node
-- PropTypes.instanceOf()
-- PropTypes.oneOf()
-- PropTypes.arrayOf()
-- PropTypes.objectOf()
-- PropTypes.shape()
 
 
 
