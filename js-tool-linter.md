@@ -26,16 +26,29 @@ $ ./node_modules/.bin/eslint --init
 # 실행
 $ ./node_modules/.bin/eslint [파일 | 디렉토리]
 
-# 스크립트 추가
+## 스크립트 추가
 {
   "scripts" : {
     "lint" : "eslint js"
   }
 }
+
+
+# 플러그인
+$ npm install eslint-config-airbnb-base eslint-plugin-import babel-eslint --save-dev
+
+## .eslintrc.json
+{
+  "parser": "babel-eslint",
+  "env": {
+    "node": true
+  },
+  "extends": ["airbnb-base"]
+}
 ```
 
 
-**exlint rule**   
+**eslint rule**   
 https://eslint.org/docs/rules/
 
 
@@ -107,6 +120,21 @@ rules:
   semi:
     - error
     - always
+```
+
+
+
+**+ formatter**    
+
+```bash
+$ npm install prettier eslint-plugin-prettier eslint-config-prettier -- save-dev  
+```
+
+
+**+ typescript**  
+
+```bash
+$ npm install @typescript-eslint/parser @typescript-eslint/eslint-plugin --save-dev
 ```
 
 
