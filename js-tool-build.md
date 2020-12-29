@@ -7,7 +7,7 @@
     - [browserify](#browserify)
     - [webpack](#webpack)
     - [rollup](#rollup)
-    - parcel
+    - [parcel](#parcel)
 
 
 
@@ -82,7 +82,7 @@ gulp.task('default', ['task-name', 'task-name', 'task-name']);
 : 모듈 번들러 + 태스크 러너      
 : CommonJS 포맷으로 작성된 모듈을 브라우저에서 사용할 경우 사용          
 : 노드에서 사용하는 기능을 브라우저에서 사용할 수 있도록 라이브러리 제공   
-&nbsp; https://github.com/browserify/browserify-handbook#builtins
+&nbsp; (https://github.com/browserify/browserify-handbook#builtins)
 
 
 ```bash
@@ -114,7 +114,6 @@ $ browserify [파일.js] -o [bundle.js]
 
 
 ```bash
-# 설치
 $ npm install webpack webpack-cli webpack-dev-server -g
 
 # 번들링
@@ -136,8 +135,8 @@ $ webpack [엔트리파일.js] [bundle.js]
 
 
 **webpack.config.js**   
-- [webpack loader](#webpack-loader)
-- [webpack plugin](#webpack-plugin)
+- [webpack.loader](#webpackloader)
+- [webpack.plugin](#webpackplugin)
 
 ```js
 var webpack = require('webpack');
@@ -151,28 +150,29 @@ module.export = {
     // : 배포용 모드로 코드 압축화와 난독화 및 트리 쉐이킹 처리를 함
 
 
+    // webpack-dev-server
     devServer: {
         inline: true,        
         hot: true,
         ...
     },
-    // webpack-dev-server
 
 
-    devtool: 'source-map',
     // https://webpack.js.org/configuration/devtool/#devtool
+    devtool: 'source-map',
 
 
+    // 의존 관계를 파악하기 위한 진입점
+    // 엔트리 파일을 기준으로 의존되는 모듈들을 단일 파일로 번들
     entry: 'index.js',
-    // 엔트리 파일을 기준으로 의존되는 모듈들을 단일 파일로 번들    
 
 
+    // 번들 파일의 이름과 저장될 위치 지정
     output: {
         path: __dirname + '/dist',
         filename: 'bundle.js',
         publicPath: '/',
     },
-    // 번들 파일 이름과 위치 지정
 
 
     resolve: {
@@ -181,28 +181,32 @@ module.export = {
     },
 
 
+    // https://webpack.js.org/concepts/loaders/
+    // 웹팩 로더를 통해 다른 유형의 파일 처리
     module: {
         rules: [],
     },
-    // 로더를 통해 이미지, 웹폰트, css 등 관리   
 
 
-    plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        // 빌드한 결과물을 브라우저에서 새로고침없이 실시간 반영
-    ],
+    // https://webpack.js.org/concepts/plugins/
     // 난독화, 최적화 등 추가 기능을 위한 설정  
+    plugins: [
+        // 빌드한 결과물을 브라우저에서 새로고침없이 실시간 반영
+        new webpack.HotModuleReplacementPlugin(),
+    ],
 
 
-    optimization: {},
+    optimization: {
+        // https://webpack.js.org/plugins/split-chunks-plugin/
+        splitChunks: {},
+    },
 }
 ```
 
 
 
-#### webpack loader
-: 타입스크립트, CSS, 이미지, 폰트 등을 JS 모듈로 변환하는 도구   
-: 웹팩 자체는 JS만 인식하나 웹팩 로더를 통해 리소스를 JS로 변환하여 JS 모듈 내에서 사용이 가능해지고 번들 대상이 됨      
+#### webpack.loader
+: 웹팩은 js와 json 파일만 인식하나 웹팩 로더를 통해 다른 유형의 파일을 js로 변환해 번들 대상이 됨    
 
 **loader list**  
 https://webpack.js.org/loaders/
@@ -247,7 +251,7 @@ plugins: [
 
 
 
-#### webpack plugin
+#### webpack.plugin
 : 번들된 결과물에 난독화, 최적화 등 추가 기능을 위한 도구   
 : 내장된 플러그인을 사용하거나 사용자 정의 플러그인 사용   
 
@@ -316,6 +320,11 @@ export default {
     plugins : [],
 };
 ```
+
+
+
+## parcel
+
 
 
 
