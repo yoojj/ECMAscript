@@ -1,11 +1,14 @@
 # JSX
 JavaScript XML   
-: E4X(ECMAScript for XML--ECMA-357) 영향 받음    
+: E4X(ECMAScript for XML)의 영향 받음    
 : 리액트 컴포넌트에서 사용할 리액트 객체 트리를 작성하기 위한 문법 체계     
-: html과 유사한 마크업을 지원하지만 html 명세를 완벽하게 따르지 않음        
-: 템플릿 언어가 아니며 조건문과 제어문 사용 불가능           
-: 트랜스파일러를 통해 JS로 변환    
+: HTML과 유사한 마크업을 지원하지만 HTML 명세를 완벽하게 따르지 않음        
+: 템플릿 언어가 아니므로 조건문과 제어문 사용 불가능           
+: 바벨같은 트랜스파일러를 통해 JS로 변환됨     
 
+
+E4X    
+https://www.ecma-international.org/publications-and-standards/standards/ecma-357/
 
 JSX 명세    
 https://facebook.github.io/jsx/  
@@ -23,11 +26,10 @@ https://babeljs.io/repl/
 
 **JSX vs React.createElement()**
 ```js
-const jsx = <div className="some-class"><p>text</p></div>
+const jsx = <div className="example"><p>text</p></div>
 
-const el = React.createElement('div', { className: 'some-class' },
-    React.createElement('p', null, `text`)
-);
+const el = React.createElement('div', { className: 'example' },
+    React.createElement('p', null, `text`));
 ```
 
 
@@ -59,7 +61,7 @@ function CustomComponent() {
 
 **표현식**
 ```js
-const text = '';
+const text = 'string';
 const jsx = <div><h1>{ text }</h1></div>;
 ```
 
@@ -68,21 +70,21 @@ const jsx = <div><h1>{ text }</h1></div>;
 ```js
 const css = {};
 const jsx = <form className={ css }>
-    <label htmlFor="someId"></label>
+    <label htmlFor="example"></label>
 
     {/* xml 형식이므로 단일 태그를 닫아야함 */}
-    <input type="text" id="someId" />
+    <input type="text" id="example" />
 </form>;
 ```
 
 
 **html 명세에 없는 속성 사용**
 ```js
-// react v16이전까지는 data-* 사용
+// v16 이전은 data-* 사용
 const jsx = <div data-custom-attribute=""></div>;
 
 
-// react v16부터 사용자 지정 속성 사용 가능
+// v16 부터 사용자 지정 속성 사용 가능
 const jsx = <div custom-attribute=""></div>;
 ```
 
@@ -106,7 +108,7 @@ const jsx = <div style={ css }></div>
 
 **삼항 연산자**
 ```js
-const jsx = <div> { 조건? 'True' : 'False' } </div>;
+const jsx = <div> { 조건 ? 'True' : 'False' } </div>;
 ```
 
 
@@ -121,6 +123,12 @@ const jsx = <div className={ True && False }></div>;
 function fn(){}
 
 const jsx = <div><h1>{ fn() }</h1></div>;
+```
+
+
+**배열**
+```js
+const jsx = [<div></div>, <div></div>, <div></div>];
 ```
 
 
