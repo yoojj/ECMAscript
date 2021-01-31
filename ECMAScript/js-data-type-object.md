@@ -1,26 +1,26 @@
 # JS Object Type
 = Non-Primitive, Reference Type, Complex Type, Composite Data Type          
-: 여러 프로퍼티를 갖을 수 있는 컨테이너        
-: 키와 값을 쌍으로 순서없이 저장   
+: 여러 프로퍼티를 갖는 컨테이너          
+: 키와 값을 쌍으로 순서없이 저장    
 
 
 **일급 객체**   
-: 언어 상에 제약이 없는 객체  
-: 객체를 변수에 대입하거나 파라미터로 넘기거나 반환 값으로 사용하거나 연산에 사용하는데 제약이 없음  
+: 제약이 없는 객체  
+: 객체를 변수에 대입하거나 파라미터로 넘기거나 반환 값으로 사용는 등 연산하는데 제약이 없음  
 : JS는 숫자, 문자, 함수 모두 일급 객체  
 
 
 **분류**  
-- [1.네이티브 객체](#1native-object)
-- [2.호스트 객체](#2host-object)
-- [3.전역 객체](#3global-object)
-- [4.사용자 정의 객체](#4user-defined-object)
+- [1.네이티브 객체](#1-native-object)
+- [2.호스트 객체](#2-host-object)
+- [3.전역 객체](#3-global-object)
+- [4.사용자 정의 객체](#4-user-defined-object)
 
 
 
 ## 1. Native Object
 = Built-in Object, Standard Object      
-: 스펙에 정의된 기본 객체     
+: JS 스펙에 정의된 기본 객체     
 : 전역에서 사용 가능  
 
 
@@ -67,14 +67,15 @@ var str = new String('string');
 : 전역 객체는 생성자가 없어 new 키워드로 생성 불가능      
 
 
-환경 | 식별자 | 제공 객체
+환경 | 식별자 | 제공 객체(= Host Object)
 ---|---|---
-[node](https://nodejs.org/api/) | [global](https://nodejs.org/api/globals.html) | Built-in Object, http, fs, url 등
-[browser](https://developer.mozilla.org/en-US/docs/Web/API) | [window](https://developer.mozilla.org/en-US/docs/Web/API/Window) | Built-in Object, BOM, DOM, XMLHttpRequest, Web API 등
+node    | global | Built-in Object, http, fs, url 등
+browser | window | Built-in Object, BOM, DOM, XMLHttpRequest, WebAPI 등
 
 
-#### Global Object API
-: 호스트에 따라 다를 수 있음   
+
+### Global Object API
+: 호스트에 따라 달라질 수 있음   
 
 전역 프로퍼티 & 전역 함수 | 설명
 ---|---
@@ -100,11 +101,10 @@ decodeURIComponent() | encodeURIComponent() 퍼센트 인코딩한 URI 디코딩
 
 
 
-## 3. User Defined Object
+## 4. User Defined Object
 
 - [팩토리 함수](#팩토리-함수)
 - [생성자 함수](#생성자-함수)
-- [prototype](#prototype)
 - [class (ES6)](#class)
 
 
@@ -123,6 +123,7 @@ var obj = new Object();
 // 프로퍼티 추가
 obj.key;
 obj['key'];
+
 
 // 프로퍼티에 값 할당
 obj.key = 'value';
@@ -154,14 +155,11 @@ var obj = {
 (obj.key === 'value') == true
 
 
-// ES6
+// ES6 이후 메소드 단축 지원
 var obj = {
-    num : 1,
-    // 메소드 단축
-    method(num){ return obj.num + num },
+    key : 'value',
+    method(){ return thid.key },
 };
-
-(obj.method(2) === 3) == true
 ```
 
 
@@ -179,8 +177,18 @@ function User(name){
     }
 }
 
-var a = User('A');
-(a.getName() === 'A') == true
+var User = (name) => {
+    return {
+        name,
+        getName() {
+            return this.name;
+        },
+    }
+};
+
+
+var user = User('name');
+(user.getName() === 'name') == true
 ```
 
 
@@ -192,28 +200,20 @@ var a = User('A');
 
 ```js
 var User = function(name){
-    this._name = name;
+    this.name = name;
 
     this.getName = function(){
-        return this._name;
+        return this.name;
     };
 
     this.setName = function(name){
-        this._name = name;
+        this.name = name;
     };
 };
 
-var a = new User();
-(a instanceof User) == true
-a.setName('A');
-(a.getName() === 'A') == true
-
-var b = new User('B');
-(b instanceof User) == true
-(b.getName() === 'B') == true
-
-var c = User();
-(c instanceof User) == false
+var user = new User('name');
+(user instanceof User) == true
+(user.getName() === 'name') == true
 
 
 // new 강제
@@ -221,14 +221,10 @@ var User = function(name){
     if((this instanceof User) == false)
         return new User(name);
 }
-
-var c = User();
-(c instanceof User) == true
 ```
 
 
 **캡슐화**
-
 ```js
 var User = function(name){
     if((this instanceof User) == false)
@@ -238,44 +234,23 @@ var User = function(name){
     var PIN = 12345;
 
     // public
-    this._name = name;
+    this.name = name;
 
     this.getPIN = function(){
         return PIN;
     };
 
     this.getName = function(){
-        return this._name;
+        return this.name;
     };
 }
 
-var a = new User('A');
+var user = new User('name');
 
-(a._name === 'A') == true
-(a.PIN === undefined) == true
+user.PIN = 0;
+(user.PIN === 0) == true
 
-a.PIN = 0;
-(a.getPIN() === 12345) == true
-```
-
-
-
-### prototype
-: 동일한 기능을 하는 메소드를 공유하기 위한 특별한 객체    
-: 생성자 함수로 만들어진 객체의 메소드는 객체 수 만큼 중복되어 생성되므로   
-&nbsp; 생성자 함수에는 객체의 고유한 속성만 정의하고 동일한 속성이나 기능은 프로토타입 객체에 정의    
-
-```js
-var User = function(name){
-    if((this instanceof User) == false)
-        return new User(name);
-
-    this._name = name;
-}
-
-// 공유될 메소드 정의
-User.prototype.getName = function(){ return this._name };
-User.prototype.setName = function(name){ this._name = name }
+(user.getPIN() === 12345) == true
 ```
 
 
@@ -286,32 +261,33 @@ User.prototype.setName = function(name){ this._name = name }
 ```js
 // ES6 이전
 var User = {
-    init : function(name) {
-        this._name = name;
-        this.getName = function(){ return this._name };
-        this.setName = function(name){ this._name = name };    
+    init: function(name) {
+        this.name = name;
+        this.getName = function(){ return this.name };
+        this.setName = function(name){ this.name = name };    
     }
 }
 
-var a = Object.create(User);
-a.init('A');
-(a.getName() === 'A') == true
+var user = Object.create(User);
+user.init('name');
+(user.getName() === 'name') == true
 
 
 // ES6 이후
 class User {
     constructor(name){
-        this._name = name;
+        this.name = name;
     }
-    get Name() {return this._name };
-    set Name(name) { this._name = name };
+    get Name() {return this.name };
+    set Name(name) { this.name = name };
 }
 
-var b = new User('B');
-(b.Name === 'B') == true
+var user = new User('name');
 
-b.Name = 'BBB';
-(b.Name === 'BBB') == true
+(user.Name === 'name') == true
+
+user.Name = '';
+(user.Name === '') == true
 ```
 
 
