@@ -1,5 +1,5 @@
 # JS Object
-: 아무것도 상속받지 않은 기본 내장 객체   
+: 아무것도 상속받지 않은 기본 객체   
 : JS의 모든 객체는 Object 객체에서 파생된 객체     
 
 https://tc39.es/ecma262/#sec-object-objects
@@ -8,8 +8,8 @@ https://tc39.es/ecma262/#sec-object-objects
 **메소드**
 - [Object.assign()](#objectassign)
 - [Object.create()](#objectcreate)
-- [Object.defineProperties()](#objectdefineproperties)
 - [Object.defineProperty()](#objectdefineproperty)
+- [Object.defineProperties()](#objectdefineproperties)
 - [Object.entries()](#objectentries)
 - [Object.freeze()](#objectfreeze)
 - [Object.fromEntries()](#objectfromentries)
@@ -30,7 +30,7 @@ https://tc39.es/ecma262/#sec-object-objects
 
 
 ## Object.assign()
-: 전달받은 소스 객체의 프로퍼티를 대상 객체로 복사   
+: 전달받은 객체의 프로퍼티를 대상 객체로 복사   
 
 > Object.assign(target, ...sources)
 
@@ -90,36 +90,9 @@ obj.constructor = Object;
 
 
 
-**Object.create() vs new operator**
-```js
-
-```
-
-
-
-## Object.defineProperties()
-
->  Object.defineProperties(O, Properties)
-
-```js
-var obj = {};
-
-Object.defineProperties(obj, {
-    num : {
-        value : 0,
-    },
-    str : {
-        value : '',
-        writable : true,
-    },
-});
-```
-
-
-
 ## Object.defineProperty()
-: 객체의 기존 프로퍼티를 수정하거나 새로운 프로퍼티를 정의한 객체 반환   
-: 프로퍼티에 옵션을 적용하여 추가 설정을 함   
+: 전달받은 객체의 프로퍼티를 수정하거나 새로운 프로퍼티를 정의해 추가     
+: 프로퍼티에 옵션-설명자를 적용해 추가 설정을 함   
 
 > Object.defineProperty(O, P, Attributes)
 
@@ -162,53 +135,102 @@ function User(name){
     });
 }
 
-User.prototype.getName = function(){ return this._name };
-User.prototype.setName = function(name){ this._name = name };
+User.prototype.getName = function(){ return this.name };
+User.prototype.setName = function(name){ this.name = name };
 
-var test = new User('이름');
-
-test.PIN = 12345;
-(test.PIN === 12345) == true
-
-test.PIN = 0; // Error: 변경 불가
+var user = new User('name');
+user.PIN = 12345;
+(user.PIN === 12345) == true
 ```
 
 
-## Object.freeze()
-: 객체를 동결시켜 불변으로 만듬  
+
+## Object.defineProperties()
+: 전달받은 객체의 프로퍼티를 수정하거나 새 프로퍼티를 정의해 추가
+
+>  Object.defineProperties(O, Properties)
 
 ```js
-var obj = { num : 0 };
+var obj = {};
 
+Object.defineProperties(obj, {
+    num : {
+        value : 0,
+    },
+    str : {
+        value : '',
+        writable : true,
+    },
+});
+```
+
+
+
+## Object.freeze()
+: 전달받은 객체를 동결시켜 불변으로 만듬  
+
+> Object.freeze(O)
+
+```js
+var obj = { a: 1, b: 2, c: 3, };
 Object.freeze(obj);
 ```
 
 
 
 ## Object.entries()
+: 전달받은 객체의 프로퍼티를 배열로 반환
 
 > Object.entries(O)
 
 ```js
+var obj = { a: 1, b: 2, c: 3, };
+var entries = Object.entries(obj);
+(entries.length === 3) == true
 ```
 
 
 
 ## Object.fromEntries()
+: 키/값 쌍으로 이루어진 목록을 객체로 반환  
 
-> Object.fromEntries (iterable)
+> Object.fromEntries(iterable)
 
 ```js
+var entries = [
+    ['a', 1],
+    ['b', 2],
+    ['c', 3]
+];
+var entries = new Map([ ['a', 1], ['b', 2], ['c', 3] ]);
+var entries = Object.entries({ a: 1, b: 2, c: 3, });
+
+var obj = Object.fromEntries(entries);
 ```
 
 
 
 ## Object.getOwnPropertyDescriptor()
-
+: 전달받은 객체의 프로퍼티 설명자 반환  
 > Object.getOwnPropertyDescriptor(O, P)
+
+```js
+var obj = { a: 1, b:2, c:3 };
+var descriptors = Object.getOwnPropertyDescriptor(obj, 'a');
+(descriptors.value === 1) == true
+```
+
+
+
+## Object.getOwnPropertyDescriptors()
+: 전달받은 객체의 모든 프로퍼티 설명자 반환
+
 > Object.getOwnPropertyDescriptors(O)
 
 ```js
+var obj = { a: 1, b:2, c:3 };
+var descriptors = Object.getOwnPropertyDescriptors(obj);
+(descriptors.a.value === 1) == true
 ```
 
 
@@ -241,10 +263,14 @@ Object.freeze(obj);
 
 
 ## Object.is()
+: 전달받은 두 값이 같은지 여부 반환
 
 > Object.is(value1, value2)
 
 ```js
+var a = {};
+var b = a;
+Object.is(a, b) == true
 ```
 
 
@@ -265,58 +291,70 @@ Object.isExtensible(obj) == false
 
 
 ## Object.isFrozen()
-: 객체가 freeze-불변 상태인지 확인 여부 반환
+: 전달받은 객체가 불변 상태인지 여부 반환
 
 > Object.isFrozen(O)
 
 ```js
-var obj = { num: 0 };
-Object.freeze(obj);
+var obj = {};
+Object.isFrozen(obj) == false
 
+Object.freeze(obj);
 Object.isFrozen(obj) == true
 ```
 
 
 
 ## Object.isSealed()
-: 객체가 seal-잠긴 상태인지 확인 여부 반환
+: 전달받은 객체가 잠금 상태인지 여부 반환
 
 > Object.isSealed(O)
 
 ```js
-var obj = { num : 0 };
-Object.seal(obj);
+var obj = { };
+Object.isSealed(obj) == false
 
+Object.seal(obj);
 Object.isSealed(obj) == true
 ```
 
 
 
 ## Object.keys()
-: 객체의 열거 가능한 프로퍼티를 배열로 반환   
+: 전달받은 객체의 열거 가능한 프로퍼티를 배열로 반환   
 
-> Object.keys (O)
+> Object.keys(O)
 
 ```js
-var obj = {
-    a : 1,
-    b : 2,
-    c : 3,
-};
-
-(Object.keys(obj).toString() === 'a,b,c') == true
+var obj = { a: 1, b: 2, c: 3, };
+var arr = Object.keys(obj);
+(obj.toString() === 'a,b,c') == true
 
 
-// 객체 자신의 멤버만 해당  
-var o = Object.create(obj);
-(o.a === 1) ==  true
-(Object.keys(o).toString() === '') == true
+// enumerable 주의
+var obj = Object.create(Object.prototype, {
+    key: {
+        value: 'value',           
+        writable: false,
+        configurable: false,
+        enumerable: false,  
+    },
+});
+
+obj.a = 1;
+obj.b = 2;
+obj.c = 3;
+
+var arr = Object.keys(obj);
+
+(obj.key === 'value') == true
+(arr.toString() === 'a,b,c') == true
 ```
 
 
 
 ## Object.preventExtensions()
-: 객체에 프로퍼티 추가-확장을 금지함    
+: 전달받은 객체에 프로퍼티 추가-확장을 불가능하게함        
 
 > Object.preventExtensions(O)
 
@@ -329,13 +367,14 @@ obj.key = 'value';
 ```
 
 
+
 ## Object.seal()
-: 전달받은 객체에 프로퍼티를 추가하거나 제거하지 못하게 잠김 상태로 바꿈   
+: 전달받은 객체에 프로퍼티를 추가하거나 제거하지 못하게 잠금 상태로 바꿈   
 
 > Object.seal(O)
 
 ```js
-var obj = { num: 0 };
+var obj = {};
 Object.seal(obj);
 
 obj.key = 'value';
@@ -343,26 +382,15 @@ obj.key = 'value';
 ```
 
 
-**seal() vs freeze()**
-```js
-var obj1 = { key : 'value' };
-var obj2 = { key : 'value' };
-
-Object.seal(obj1);
-Object.freeze(obj2);
-
-obj1.key = '변경';
-(obj1.key === '변경') == true
-
-obj2.key = '변경';
-(obj2.key === 'value') == true
-```
+**seal() vs freeze()**   
+: seal() 메소드는 프로퍼티가 쓰기 가능하다면 값 변경 가능      
+: freeze() 메소드는 프로퍼티 값 변경 불가능      
 
 
 
 ## Object.setPrototypeOf()
 
-> Object.setPrototypeOf (O, proto)
+> Object.setPrototypeOf(O, proto)
 
 ```js
 ```
@@ -370,28 +398,20 @@ obj2.key = '변경';
 
 
 ## Object.values()
-: 전달받은 객체의 값들을 배열로 반환
+: 전달받은 객체의 열거 가능한 프로퍼티 값들을 배열로 반환
 
 > Object.values(O)
 
 ```js
-var obj = {
-    a : 1,
-    b : 2,
-    c : 3,
+var obj = { a: 1, b: 2, c: 3, };
+var arr = Object.values(obj);
+(arr.toString() === '1,2,3') == true
+
+
+var obj = { a: 1, b: 2, c: 3,
+    d: { key: 4 },
+    e: { key: 5 },
 };
-
-(Object.values(obj).toString() === '1,2,3') == true
-
-
-var obj = {
-    a : 1,
-    b : 2,
-    c : 3,
-    d : { key : 4 },
-    e : { key : 5 },
-};
-
 var arr = Object.values(obj);
 (arr[4].key === 5) == true
 ```
