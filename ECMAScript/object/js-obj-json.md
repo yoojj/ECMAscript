@@ -1,17 +1,18 @@
 # JS JSON
 
-**JSON**    
-JavaScript Object Notation       
-: 데이터 저장 및 전송을 위한 형식     
+https://tc39.es/ecma262/#sec-json-object
 
 
+**메소드**
 - [JSON.parse()](#jsonparse)
 - [JSON.stringify()](#jsonstringify)
 
 
 
 ## JSON.parse()
-: json 문자열을 파싱하여 js 값이나 객체로 변환
+: 전달된 문자열을 JSON으로 파싱하여 JS 데이터로 반환  
+
+> JSON.parse(text [, reviver])
 
 ```js
 var json = `{
@@ -27,7 +28,9 @@ var obj = JSON.parse(json);
 
 
 ## JSON.stringify()
-: js 값이나 객체를 json 문자열로 직렬화  
+: JS 데이터를 JSON 문자열로 직렬화하고 반환   
+
+> JSON.stringify(value [, replacer [, space]])
 
 ```js
 var obj = {
@@ -39,6 +42,7 @@ var obj = {
 var json = JSON.stringify(obj);
 (json.toString() === '{"num":0,"str":"string","result":true}') == true
 ```
+
 
 
 [top](#)
