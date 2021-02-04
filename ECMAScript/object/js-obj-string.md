@@ -1,5 +1,8 @@
 # JS String
 
+https://tc39.es/ecma262/#sec-string-objects
+
+
 ```js
 // 전역 함수
 String();
@@ -28,9 +31,13 @@ obj.key = 'value';
 
 프로퍼티 | 설명
 ---|---
-length | 문자열의 길이 반환
+length      | 문자열의 길이 반환
 
 
+**메소드**
+- [String.fromCharCode()](#stringfromcharcode)
+- [String.fromCodePoint()](#stringfromcodepoint)
+- [String.raw()](#stringraw)
 - [String.prototype.charAt()](#stringprototypecharat)
 - [String.prototype.charCodeAt()](#stringprototypecharcodeat)
 - [String.prototype.codePointAt()](#stringprototypecodepointat)
@@ -39,24 +46,55 @@ length | 문자열의 길이 반환
 - [String.prototype.includes()](#stringprototypeincludes)
 - [String.prototype.indexOf()](#stringprototypeindexof)
 - [String.prototype.lastIndexOf()](#stringprototypelastindexof)
-- String.prototype.localeCompare()
+- [String.prototype.localeCompare()](#stringprototypelocalecompare)
 - [String.prototype.match()](#stringprototypematch)
+- [String.prototype.matchAll()](#stringprototypematchall)
 - [String.prototype.normalize()](#stringprototypenormalize)
 - [String.prototype.padEnd()](#stringprototypepadend)
 - [String.prototype.padStart()](#stringprototypepadstart)
 - [String.prototype.repeat()](#stringprototyperepeat)
 - [String.prototype.replace()](#stringprototypereplace)
+- String.prototype.replaceAll()
 - [String.prototype.search()](#stringprototypesearch)
 - [String.prototype.slice()](#stringprototypeslice)
 - [String.prototype.split()](#stringprototypesplit)
 - [String.prototype.startsWith()](#stringprototypestartswith)
 - [String.prototype.substring()](#stringprototypesubstring)
-- [String.prototype.toLowerCase()](#stringprototypelowercase)
-- String.prototype.toSource()
+- [String.prototype.toLocaleLowerCase()](#stringprototypetolocalelowercase)
+- [String.prototype.toLocaleUpperCase()](#stringprototypetolocaleuppercase)
+- [String.prototype.toLowerCase()](#stringprototypetolowercase)
 - String.prototype.toString()
 - [String.prototype.toUpperCase()](#stringprototypetouppercase)
 - [String.prototype.trim()](#stringprototypetrim)
+- String.prototype.trimEnd()
+- String.prototype.trimStart()
 - String.prototype.valueOf()
+
+
+
+## String.fromCharCode()
+
+> String.fromCharCode(...codeUnit)
+
+```js
+(String.fromCharCode(48) === '0') == true
+```
+
+
+
+## String.fromCodePoint()
+
+> String.fromCodePoint(...codePoints)
+
+```js
+(String.fromCodePoint(48) === '0') == true
+```
+
+
+
+## String.raw()
+
+>  String.raw(template, ...substitutions)
 
 
 
@@ -96,8 +134,10 @@ var str = 'string';
 
 
 ## String.prototype.concat()
-: 문자열에 전달된 문자열을 연결하여 새 문자열 반환     
+: 문자열에 전달된 문자열을 연결한 새 문자열 반환     
 : + 연산자와 동일한 기능      
+
+> ''.concat(...args)
 
 ```js
 var str = 'str'.concat('ing');
@@ -115,7 +155,9 @@ var str = a.concat(',', b, ',', c);
 
 
 ## String.prototype.endsWith()
-: 문자열의 마지막 문자(열)와 주어진 문자(열)를 비교하여 참 거짓 반환  
+: 문자열의 마지막 문자(열)와 주어진 문자(열)를 비교해 참이나 거짓 반환  
+
+> ''.endsWith(searchString [, endPosition ])
 
 ```js
 var str = 'string';
@@ -137,9 +179,12 @@ str.endsWith('g') == true
 ## String.prototype.includes()
 : 문자열에 주어진 문자가 포함되었는지 여부 반환
 
+> ''.include(searchString [, position])
+
 ```js
 var str = 'string';
 str.includes('r') == true
+str.includes('r', 3) == false
 ```
 
 
@@ -147,6 +192,8 @@ str.includes('r') == true
 ## String.prototype.indexOf()
 : 문자열에 주어진 문자와 처음으로 일치하는 요소의 인덱스 반환  
 : 해당 문자가 문자열에 없을 경우 -1 반환   
+
+> ''.indexOf(searchString [, position])
 
 ```js
 var str = 'abcabc';
@@ -156,8 +203,10 @@ var str = 'abcabc';
 
 
 ## String.prototype.lastIndexOf()
-: 문자열에 주어진 문자를 뒤에서부터 찾아서 처음으로 일치하는 요소의 인덱스 반환   
+: 문자열에 주어진 문자를 뒤에서 부터 찾아 처음으로 일치하는 요소의 인덱스 반환   
 : 해당 문자가 문자열에 없을 경우 -1 반환    
+
+> ''.lastIndexOf(searchString [, position])
 
 ```js
 var str = 'abcabc';
@@ -165,8 +214,27 @@ var str = 'abcabc';
 ```
 
 
+
+## String.prototype.localeCompare()
+: 문자열 비교해 숫자 리터럴 반환    
+: 해당 문자열이 주어진 문자열보다 앞이면 -1을 반환   
+: 해당 문자열과 주어진 문자열이 같으면 0을 반환    
+: 해당 문자열이 주어진 문자열보다 뒤면 1을 반환   
+
+> ''.localeCompare(that [, reserved1 [, reserved2]])
+
+```js
+('a'.localeCompare('b') === -1) == true
+('a'.localeCompare('a') === 0) == true
+('b'.localeCompare('a') === 1) == true
+
+'a'.localeCompare('b', 'en', { sensitivity: 'base' })
+```
+
+
+
 ## String.prototype.match()
-: 문자열에 주어진 정규식으로 검색하여 일치하는 문자를 배열로 반환   
+: 문자열에 주어진 정규식으로 검색해 일치하는 문자를 배열로 반환   
 
 ```js
 var str = 'string STRIGN string';
@@ -176,13 +244,21 @@ var result = str.match(/[A-Z]/g);
 
 
 
+## String.prototype.matchAll()
+: 문자열에 주어진 정규식으로 검색해 일치하는 문자를 iterator로 반환   
+
+
+
 ## String.prototype.normalize()
 : 문자열을 유니코드 정규화 방식에 따라 정규화하여 반환  
+
+> ''.normalize([form])
 
 - NFC 정규형 정준 결합 (Normalization Form Canonical Composition) -- windows, linux
 - NFD 정규형 정준 분해 (Normalization Form Canonical Decomposition) -- mac
 - NFKC 정규형 호환성 결합 (Normalization Form Compatibility Composition)
 - NFKD 정규형 호환성 분해 (Normalization Form Compatibility Decomposition)
+
 
 ```js
 var nfc = '\uAC01';
@@ -200,6 +276,8 @@ var nfd = '\u1100\u1161\u11A8';
 ## String.prototype.padEnd()
 : 문자열에 주어진 문자를 우측 기준으로 주어진 인덱스만큼 채워 새 문자열 반환
 
+> ''.padEnd(maxLength [, fillString])
+
 ```js
 var str = '';
 (str.padEnd(3, 'abc') === 'abc') == true
@@ -213,6 +291,8 @@ var str = 'abc';
 
 ## String.prototype.padStart()
 : 문자열에 주어진 문자를 좌측 기준으로 주어진 인덱스만큼 채워 새 문자열 반환
+
+> ''.padStart(maxLength [, fillString])
 
 ```js
 var str = '';
@@ -265,8 +345,10 @@ var str = 'string'
 
 
 ## String.prototype.slice()
-: 문자열에 주어진 시작 인덱스부터 종료 인덱스까지 부분 문자열 반환    
+: 문자열에 주어진 시작 인덱스부터 종료 인덱스에 해당하는 문자열 반환    
 : 음수를 사용할 경우 문자열 뒤에서 부터 시작   
+
+> ''.slice(start, end)
 
 ```js
 var str = 'string';
@@ -276,7 +358,9 @@ var str = 'string';
 
 
 ## String.prototype.split()
-: 지정한 구분자를 이용해 문자열 분리하여 배열로 반환  
+: 지정한 구분자를 이용해 문자열을 분리해 배열로 반환  
+
+> ''.split(separator, limit)
 
 ```js
 var str = 's t r i n g';
@@ -288,7 +372,9 @@ var result = str.split(' ');
 
 
 ## String.prototype.startsWith()
-: 문자열에 지정한 문자와 인덱스가 일치하면 참 반환  
+: 문자열에 주어진 문자와 인덱스가 일치하면 참 반환  
+
+> ''.startsWith(searchString [, position])
 
 ```js
 var str = 'string';
@@ -303,6 +389,8 @@ str.startsWith('i', 3) == true
 ## String.prototype.substring()
 : 문자열에 주어진 시작 인덱스부터 종료 인덱스까지 부분 문자열 반환   
 
+> ''.substring(start, end)
+
 ```js
 var str = 'string';
 (str.substring(3) === 'ing') == true
@@ -311,7 +399,6 @@ var str = 'string';
 
 
 **substring() vs slice()**
-
 ```js
 var str = 'string';
 
@@ -320,6 +407,24 @@ var str = 'string';
 
 (str.substring(0, -3) === '') == true
 (str.slice(0, -3) === 'str') == true
+```
+
+
+
+## String.prototype.toLocaleLowerCase()
+
+> ''.toLowerCase([reserved1 [, reserved2 ]])
+
+```js
+```
+
+
+
+## String.prototype.toLocaleUpperCase()
+
+> ''.toLocaleUpperCase([reserved1 [, reserved2 ]])
+
+```js
 ```
 
 
@@ -333,7 +438,6 @@ var str = 'ABC';
 ```
 
 
-
 ## String.prototype.toUpperCase()
 : 문자열을 대문자로 바꾸고 반환  
 
@@ -345,7 +449,7 @@ var str = 'abc'
 
 
 ## String.prototype.trim()
-: 문자열의 양끝 공백을 제거하여 새 문자열 반환
+: 문자열의 양끝 공백을 제거한 새 문자열 반환
 
 ```js
 var str = '   string   ';
