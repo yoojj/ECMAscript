@@ -32,8 +32,8 @@ var 식별자 = '값';
 
 // 변수 선언 키워드를 사용하지 않을 경우 전역 객체의 프로퍼티가 됨
 // 엄격 모드에서는 변수 선언 키워드 사용 필수
-zero = 0;
-(window.zero === 0) == true
+num = 0;
+(window.num === 0) == true
 
 
 // 전역 변수
@@ -77,15 +77,16 @@ var result = fn();
 - 프로퍼티 : 객체에 포함, 호이스팅되지 않음  
 
 ```js
-// 컨텍스트
-var global = 0; // global context
+// global context
+var global = 0;
 
-function func(){
-    var local = 0; // function context
+function fn(){
+    // function context
+    var local = 0;
     global = 1;
 }
 
-func();
+fn();
 (global === 1) == true
 
 
@@ -127,7 +128,7 @@ https://javascriptweblog.wordpress.com/2010/08/09/variables-vs-properties-in-jav
 ## Variable Keyword
 
 키워드 | 스코프 | 특징
----|---
+---|---|---
 [var](#var)           | 함수 스코프 | 재선언 가능, 재할당 가능
 [let (ES6)](#let)     | 블록 스코프 | 재선언 불가, 재할당 가능
 [const (ES6)](#const) | 블록 스코프 | 재선언 불가, 재할당 불가  
