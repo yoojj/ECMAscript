@@ -1,6 +1,17 @@
-# JS Variable
-: 데이터를 메모리에 저장하고 해당 데이터-메모리에 접근하기 위해 메모리 위치와 매칭되는 특정한 이름     
-: 리터럴, 함수, 배열, 객체 등 모든 데이터 타입 저장 가능  
+# JS Variable  
+: 데이터를 핸들링하기 위한 추상적 개념   
+: 데이터에 레이블을 지정해 메모리에 저장하고 레이블을 통해 데이터 핸들링   
+
+
+**변수명**   
+: 데이터가 저장된 메모리 위치-주소와 매칭된 특정한 이름  
+
+- 변수 : 논리적, 프로그램 언어 수준
+- 메모리 위치 : 물리적, 하드웨어 수준   
+
+
+**식별자**      
+: 변수, 프로퍼티, 배열, 함수 등을 식별하기 위해 부여하는 이름   
 
 
 ```js
@@ -8,16 +19,19 @@
 var
 
 // 변수 선언 = 메모리 공간 확보
-// : 변수 선언만으로는 변수 존재와 스코프만 결정되므로 자동으로 undefined 타입으로 지정하여
-//   메모리에 undefined 타입 크기를 확보  
+// : 변수 선언만으로는 변수 존재와 스코프만 결정되므로
+//   undefined 타입으로 지정하여 해당 크기의 메모리 공간을 확보
 var 식별자;
 
-// 변수 선언 + 변수 초기화 (최초 한 번 할당)
-// : 변수 선언 및 메모리에 값 할당
+// 변수 선언 + 변수 초기화 (메모리에 최초로 값이나 표현식을 할당하는 경우)
 var 식별자 = '값';
 
+// 데이터 재할당 = 메모리 위치 변경  
+식별자 = '새로운 값';
+
+
 // 변수 선언 키워드를 사용하지 않을 경우 전역 객체의 프로퍼티가 됨
-// 엄격 모드에서는 불가  
+// 엄격 모드에서는 변수 선언 키워드 사용 필수
 zero = 0;
 (window.zero === 0) == true
 
@@ -32,16 +46,19 @@ impliedGlobal = 0;
 // 전역 객체 프로퍼티  
 window.windowGlobal = 0;
 
-// 지역 변수
-function func(){
+function fn(){
+    // 지역 변수
     var local = 0;
+
+    // 암시적 전역 변수
+    impliedGlobal = 0;
 }
 
 
-// 우선 순위
+// 변수 우선 순위
 var str = '전역변수';
 
-function func(){
+function fn(){
     var str = '지역변수';
 
     console.log('local:' + str);
@@ -50,15 +67,14 @@ function func(){
     return str;
 }
 
-var result = func();
+var result = fn();
 (result === '지역변수') == true  
 ```
 
 
-**variable vs property**
-
-- 변수 - 컨텍스트에 포함, 호이스팅됨  
-- 프로퍼티 - 객체에 포함, 호이스팅되지 않음  
+**variable vs property**   
+- 변수 : 컨텍스트에 포함, 호이스팅됨  
+- 프로퍼티 : 객체에 포함, 호이스팅되지 않음  
 
 ```js
 // 컨텍스트
@@ -96,30 +112,41 @@ delete b == false
 var a = 'A';
 window[a] = 'B';
 
-(a == 'A') == true
+(a === 'A') == true
 (window.a === 'A') == true
+(window['a'] === 'A') == true
 
 (window[a] === 'B') == true
 ```
 
-\+ https://javascriptweblog.wordpress.com/2010/08/09/variables-vs-properties-in-javascript/
+
+https://javascriptweblog.wordpress.com/2010/08/09/variables-vs-properties-in-javascript/
 
 
 
 ## Variable Keyword
 
-키워드 | 스코프
+키워드 | 스코프 | 특징
 ---|---
-[var](#var)          | 함수 스코프
-[let(ES6)](#let)     | 블록 스코프
-[const(ES6)](#const) | 블록 스코프
+[var](#var)           | 함수 스코프 | 재선언 가능, 재할당 가능
+[let (ES6)](#let)     | 블록 스코프 | 재선언 불가, 재할당 가능
+[const (ES6)](#const) | 블록 스코프 | 재선언 불가, 재할당 불가  
 
 
 
 ### var
 
 ```js
-function func(){
+// 전역 스코프
+var num = 0;
+
+function fn(){
+    console.log(num);
+}
+
+
+// 함수 스코프
+function fn(){
     var num = 1;
 
     if(true){
@@ -131,8 +158,8 @@ function func(){
 }
 
 
-// 1. 컴파일시 선언문을 함수 스코프 최상단으로 끌어 올려 메모리 할당을 우선시 함  
-function func(){
+// 1. JS 엔진은 선언문을 함수 스코프 최상단으로 끌어 올려 메모리 할당을 우선시 함  
+function fn(){
     // 2. 때문에 실행시 오류가 나지 않지만 값은 undefined를 반환  
     console.log(num);
 
@@ -149,7 +176,7 @@ function func(){
 : 식별자 선언시 초기화하지 않으면 undefined 값 할당
 
 ```js
-function func(){
+function fn(){
     let num = 1;
 
     if(true){
@@ -195,6 +222,7 @@ const objA = {
         num : 2
     }
 };
+
 Object.freeze(objA);
 objA.objB.num = 0;
 ```
