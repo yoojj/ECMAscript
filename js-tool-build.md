@@ -3,11 +3,15 @@
 - [Task Runner](#task-runner)
     - grunt
     - [gulp](#gulp)
-- [Module Bundler](#module-bundler)
+- [Bundler](#bundler)
     - [browserify](#browserify)
     - [webpack](#webpack)
     - [rollup](#rollup)
-    - [parcel](#parcel)
+    - parcel
+    - esbuild
+    - fuse-box
+- Build
+    - snowpack
 
 
 
@@ -65,7 +69,7 @@ gulp.task('default', ['task-name', 'task-name', 'task-name']);
 
 
 
-## Module Bundler  
+## Bundler  
 : 모듈 로드 및 종속성 관리 도구     
 : 모듈 포맷 기반으로 작성된 모듈을 브라우저에서 사용하기 적합하도록 단일 파일로 변환    
 : (도구에 따라) 플러그인을 설치해 태스크 러너 역할 수행 가능      
@@ -102,7 +106,7 @@ $ browserify [파일.js] -o [bundle.js]
 
 
 ### webpack
-: 모듈 번들러 + 모듈 러너 + 태스크 러너         
+: 모듈 번들러 + 모듈 러너 + 태스크 러너           
 : CommonJS와 AMD 포맷을 지원하며 webpack4 부터 트리 쉐이킹 및 ES Module 포맷 지원   
 : 플러그인을 설치하여 코드 축소화, 국체화, HMR 등 작업 수행   
 
@@ -252,7 +256,7 @@ plugins: [
 
 
 #### webpack.plugin
-: 번들된 결과물에 난독화, 최적화 등 추가 기능을 위한 도구   
+: 번들된 결과물에 난독화나 최적화 등 추가 기능을 위한 도구   
 : 내장된 플러그인을 사용하거나 사용자 정의 플러그인 사용   
 
 **plugin list**  
@@ -280,11 +284,14 @@ plugins: [
 : 사용하지 않는 코드를 제거하는 기능 지원 (트리 쉐이킹)    
 
 
-**플러그인**  
-- rollup-plugin-html-entry
-- rollup-plugin-uglify
-- rollup-plugin-commonjs
-- ...
+플러그인 | 설명
+---|---
+rollup-plugin-node-resolve |
+rollup-plugin-babel      |
+rollup-plugin-commonjs   |
+rollup-plugin-html-entry |
+rollup-plugin-postcss    |
+rollup-plugin-uglify     |
 
 
 **출력 형식**  
@@ -298,10 +305,10 @@ plugins: [
 ```bash
 $ npm install rollup -g
 
-# IIFE 패턴으로 번들  
+## IIFE 패턴으로 번들  
 $ rollup [파일.js] --o [bundle.js] --f iife
 
-# CJS 포맷으로 변환
+## CJS 포맷으로 변환
 $ rollup [파일.js] --o [bundle.js] --f cjs
 
 # rollup 설정 파일 실행
@@ -315,16 +322,12 @@ export default {
     input: '',
     output: {
         file: '',
-        format: ''
+        format: '',
+        exports: '',
     },
-    plugins : [],
+    plugins: [],
 };
 ```
-
-
-
-## parcel
-
 
 
 
