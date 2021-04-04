@@ -1,5 +1,8 @@
 # JS Build    
 
+
+- [Build](#build)
+    - [snowpack](#snowpack)
 - [Task Runner](#task-runner)
     - grunt
     - [gulp](#gulp)
@@ -10,17 +13,61 @@
     - parcel
     - esbuild
     - fuse-box
-- Build
-    - snowpack
+
+
+
+## Build
+: 소스 코드를 플랫폼에서 실행 가능한 형태로 컴파일하기 위한 도구    
+: 컴파일, 패키징, 테스트, 배포 등 기능 지원
+
+
+
+### snowpack
+: 기존 빌드 시스템 대안으로 만들어진 빌드 툴   
+: 플러그인을 통해 번들 기능 지원   
+: ES Module 기반으로 작성된 소스 코드를 개별 파일로 빌드하고 이를 플랫폼에 제공   
+&nbsp; (최신 브라우저가 ES Module을 지원하므로)    
+: 빌드된 파일은 캐싱되며 변경된 파일만 빌드됨   
+
+
+```bash
+$ npm install snowpack -g
+$ npm install snowpack --save-dev
+
+# package.json에 스크립트 추가
+"scripts": {
+  "start": "snowpack dev",
+  "build": "snowpack build"
+}
+
+# snowpack 구성 파일 생성
+$ snowpack init
+```
+
+
+플러그인 | 설명
+---|---
+plugin-dotenv       | env 파일의 환경 변수 로드
+plugin-run-script   | snowpack CLI
+plugin-build-script | CLI을 통해 파일 빌드
+
+https://www.snowpack.dev/plugins
+
+
+**snowpack.config**
+```json
+{
+    "mount": {},
+    "plugins": [],
+    "routes": [],
+    "optimize": []
+}
+```
 
 
 
 ## Task Runner
-: 전처리기로 작성된 CSS 컴파일, 코드 압축-최소화, 코드 난독화, 단위 테스트, 배포 등 반복 작업 자동화 도구   
-
-**종류**   
-- grunt
-- [gulp](#gulp)
+: 전처리기로 작성된 CSS 컴파일, 코드 압축-최소화, 코드 난독화, 단위 테스트, 빌드, 배포 등 반복 작업 자동화 도구   
 
 
 
@@ -72,13 +119,7 @@ gulp.task('default', ['task-name', 'task-name', 'task-name']);
 ## Bundler  
 : 모듈 로드 및 종속성 관리 도구     
 : 모듈 포맷 기반으로 작성된 모듈을 브라우저에서 사용하기 적합하도록 단일 파일로 변환    
-: (도구에 따라) 플러그인을 설치해 태스크 러너 역할 수행 가능      
-
-**종류**  
-- [browserify](#browserify)
-- [webpack](#webpack)
-- [rollup](#rollup)
-- parcel
+: 플러그인을 통해 태스크 러너 역할 수행 가능      
 
 
 
@@ -108,7 +149,7 @@ $ browserify [파일.js] -o [bundle.js]
 ### webpack
 : 모듈 번들러 + 모듈 러너 + 태스크 러너           
 : CommonJS와 AMD 포맷을 지원하며 webpack4 부터 트리 쉐이킹 및 ES Module 포맷 지원   
-: 플러그인을 설치하여 코드 축소화, 국체화, HMR 등 작업 수행   
+: 플러그인을 통해 코드 최소화, 국체화, HMR 등 작업 수행   
 
 
 - Tree Shaking (https://webpack.js.org/guides/tree-shaking/)
@@ -124,7 +165,7 @@ $ npm install webpack webpack-cli webpack-dev-server -g
 $ webpack [엔트리파일.js] [bundle.js]  
 
 
-# package.json 스크립트 추가
+# package.json에 스크립트 추가
 {
     "scripts": {
         # 개발용 설정 파일이 별도로 있는 경우 config 옵션 사용
